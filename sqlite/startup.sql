@@ -1,0 +1,1 @@
+CREATE TABLE URL(protocol varchar(10), TLD varchar(5), host varchar(60), path varchar(200), HTML varchar(99999), CSS varchar(99999));
