@@ -1,7 +1,7 @@
 <project name="spidersweb" default="test" basedir=".">
 
     <!-- Source files -->
-    <property name="main.src.dir" location="spidersweb/src/main/java"/>
+    <property name="main.src.dir" location="src/main/java"/>
     <property name="test.src.dir" location="src/test/java"/>
 
     <!-- Build files -->
