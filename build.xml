@@ -1,4 +1,4 @@
-<project name="buggy" basedir="." default="default">
+<project name="spidersweb" basedir="." default="default">
 
   <!--inputs-->
   <property name="main.src.dir" value="src/main/java"/>
