@@ -1,7 +1,11 @@
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 public class Crawler {
 	
@@ -29,10 +33,11 @@ public class Crawler {
 		return data; // returns the data from the server
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		Crawler test = new Crawler();
 		String data;
 		
 		data = test.crawl("www.scp-wiki.net", "/scp-1250", 80);
+		Document doc = Jsoup.connect("http://en.wikipedia.org/").get();
 	}
 }
