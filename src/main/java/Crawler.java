@@ -1,43 +1,51 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
+import java.util.ArrayList;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 public class Crawler {
-	
-	public String crawl (String domain, String page, int port) {
-		
-		String temp, data = ""; // the variable that stores data from the server
-		
-		try (Socket server = new Socket(domain, port); // tries to connect to a server
-				BufferedReader fromServer = new BufferedReader(new InputStreamReader(server.getInputStream()));
-				PrintWriter toServer = new PrintWriter(server.getOutputStream());
-				BufferedReader input = new BufferedReader(new InputStreamReader(System.in));) {
-			
-			toServer.println("GET " + page + " HTTP/1.1");
-			toServer.println("HOST: " + domain);
-			toServer.println("CONNECTION: close");
-			toServer.println();
-			toServer.flush();
-			
-			while ((temp = fromServer.readLine()) != null) { // this loop is used to store the data from the server
-				data += temp + "\n";
+
+	public static void main(String[] args) {
+		int limit = 250;
+		Elements links;
+		Document doc;
+		ArrayList<String> linkList = new ArrayList<>();
+
+		try {
+			doc = Jsoup.connect("https://oli.org/").get();
+			links = doc.select("a[href]");
+			for (Element link : links) {
+				if (!(linkList.contains(link.attr("abs:href")))) {
+					linkList.add(link.attr("abs:href"));
+				}
 			}
-		} catch (Exception e) { // catches any errors 
-			e.printStackTrace(); // prints the error received
+		} catch (IOException e) {
+			System.err.println("Please provide a valid URL or Link");
 		}
-		return data; // returns the data from the server
-	}
-	
-	public static void main(String[] args) throws IOException {
-		Crawler test = new Crawler();
-		String data;
-		
-		data = test.crawl("www.scp-wiki.net", "/scp-1250", 80);
-		Document doc = Jsoup.connect("http://en.wikipedia.org/").get();
+
+		for (int i = 0; i < limit; i++) {
+			try {
+				System.out.println(i + " = " + linkList.get(i));
+				if (!(linkList.get(i).startsWith("http"))) {
+					linkList.remove(i);
+					continue;
+				}
+				doc = Jsoup.connect(linkList.get(i)).get();
+				links = doc.select("a[href]");
+				for (Element link : links) {
+					if (!(linkList.contains(link.attr("abs:href")))) {
+						linkList.add(link.attr("abs:href"));
+					}
+				}
+				System.out.println(linkList.size());
+
+			} catch (IOException e) {
+				System.err.println("Bad Link Encountered... Moving On");
+				continue;
+			}
+		}
 	}
 }
