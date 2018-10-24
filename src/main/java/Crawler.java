@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -9,13 +10,19 @@ import org.jsoup.select.Elements;
 public class Crawler {
 
 	public static void main(String[] args) {
-		int limit = 250;
+		int limit = 25;
 		Elements links;
 		Document doc;
 		ArrayList<String> linkList = new ArrayList<>();
+		
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Enter the site to start crawling at: ");
+		String firstLink = scan.nextLine();
+		System.out.println("");
+		
 
 		try {
-			doc = Jsoup.connect("https://oli.org/").get();
+			doc = Jsoup.connect(firstLink).get();
 			links = doc.select("a[href]");
 			for (Element link : links) {
 				if (!(linkList.contains(link.attr("abs:href")))) {
@@ -28,6 +35,10 @@ public class Crawler {
 
 		for (int i = 0; i < limit; i++) {
 			try {
+				if (i >= linkList.size()) {
+					System.out.println("All Links Searched Exiting.");
+					break;
+				}
 				System.out.println(i + " = " + linkList.get(i));
 				if (!(linkList.get(i).startsWith("http"))) {
 					linkList.remove(i);
@@ -47,5 +58,11 @@ public class Crawler {
 				continue;
 			}
 		}
+
+		System.out.println("");
+		System.out.println("Limit Reached");
+		System.out.println("Total Number Of Links Found: ");
+		System.out.println(linkList.size());
+
 	}
 }
