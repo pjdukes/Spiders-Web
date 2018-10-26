@@ -8,19 +8,13 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class Crawler {
-
-	public static void main(String[] args) {
-		int limit = 25;
+	
+	
+	public static ArrayList<String> crawl (String firstLink, ArrayList<String> linkList, int limit) {
+		
 		Elements links;
 		Document doc;
-		ArrayList<String> linkList = new ArrayList<>();
 		
-		Scanner scan = new Scanner(System.in);
-		System.out.println("Enter the site to start crawling at: ");
-		String firstLink = scan.nextLine();
-		System.out.println("");
-		
-
 		try {
 			doc = Jsoup.connect(firstLink).get();
 			links = doc.select("a[href]");
@@ -58,11 +52,25 @@ public class Crawler {
 				continue;
 			}
 		}
+		return linkList;
+	}
 
+	public static void main(String[] args) {
+		int limit = 25;
+		ArrayList<String> linkList = new ArrayList<>();
+		
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Enter the site to start crawling at: ");
+		String firstLink = scan.nextLine();
+		System.out.println("");
+		
+		linkList = crawl(firstLink, linkList, limit);
+		
 		System.out.println("");
 		System.out.println("Limit Reached");
 		System.out.println("Total Number Of Links Found: ");
 		System.out.println(linkList.size());
+		
 
 	}
 }
