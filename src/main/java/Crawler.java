@@ -54,9 +54,25 @@ public class Crawler {
 		}
 		return linkList;
 	}
+	
+	public static String getData(String link) {
+		String data = "";
+		Document doc = null;
+		
+		try {
+			doc = Jsoup.connect(link).get();
+			data += doc.select("html");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return data;
+	}
 
 	public static void main(String[] args) {
-		int limit = 25;
+		int crawlLimit = 25;
+		int dataLimit = 5;
+		String data = null;
 		ArrayList<String> linkList = new ArrayList<>();
 		
 		Scanner scan = new Scanner(System.in);
@@ -64,7 +80,12 @@ public class Crawler {
 		String firstLink = scan.nextLine();
 		System.out.println("");
 		
-		linkList = crawl(firstLink, linkList, limit);
+		linkList = crawl(firstLink, linkList, crawlLimit);
+		for (int i = 0; i < linkList.size() && i < dataLimit; i++) {
+			data = getData(linkList.get(i));
+			//parseData(data)
+			//storeData()
+		}
 		
 		System.out.println("");
 		System.out.println("Limit Reached");

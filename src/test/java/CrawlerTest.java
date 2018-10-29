@@ -18,4 +18,12 @@ public class CrawlerTest {
 		ArrayList<String> linkList = new ArrayList<>();
 		test.crawl("bad.link", linkList, 1);
 	}
+	
+	@Test
+	public void testGetData() {
+		Crawler test = new Crawler();
+		String data = null;
+		data = test.getData("http://www.google.com");
+		assertTrue("The value of data should not be 0", data != null);
+	}
 }
