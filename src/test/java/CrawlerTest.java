@@ -2,6 +2,8 @@ import java.util.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
+import java.sql.*;
+
 public class CrawlerTest {
 	
 	@Test
@@ -25,5 +27,13 @@ public class CrawlerTest {
 		String data = null;
 		data = test.getData("http://www.google.com");
 		assertTrue("The value of data should not be 0", data != null);
+	}
+	
+	@Test 
+	public void testDatabaseConnection() {
+		DBO test = new DBO();
+		Connection c = test.connectDB();
+		test.insertDomain("Google", ".com", "https", c);
+
 	}
 }

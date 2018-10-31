@@ -3,9 +3,15 @@ import java.sql.*;
 public class DBO {
 
 	public Connection connectDB() {
+		try {
+		Class.forName("org.sqlite.JDBC");
+		} catch (ClassNotFoundException e)
+		{
+			
+		}
 		Connection connection = null;
 		try {
-			connection = DriverManager.getConnection("jdbc:sqlite://sqlite//web.db");
+			connection = DriverManager.getConnection("jdbc:sqlite:web.db");
 			System.out.println("Connection has been established");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
