@@ -1,0 +1,1 @@
+CREATE TABLE Tags(name text, TLD text, protocol text, tag text, data innerData);

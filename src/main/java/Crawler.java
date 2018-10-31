@@ -75,7 +75,7 @@ public class Crawler {
 		
 		DBO test = new DBO();
 		Connection c = test.connectDB();
-		test.insertDomain("Google", ".com", "https", c);
+		//test.insertTag("Google", ".com", "https", c);
 		
 		int crawlLimit = 25;
 		int dataLimit = 5;
