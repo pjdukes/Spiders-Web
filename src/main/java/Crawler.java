@@ -2,6 +2,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import java.sql.*;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -70,6 +72,11 @@ public class Crawler {
 	}
 
 	public static void main(String[] args) {
+		
+		DBO test = new DBO();
+		Connection c = test.connectDB();
+		test.insertDomain("Google", ".com", "https", c);
+		
 		int crawlLimit = 25;
 		int dataLimit = 5;
 		String data = null;
@@ -91,6 +98,8 @@ public class Crawler {
 		System.out.println("Limit Reached");
 		System.out.println("Total Number Of Links Found: ");
 		System.out.println(linkList.size());
+		
+		
 		
 
 	}
