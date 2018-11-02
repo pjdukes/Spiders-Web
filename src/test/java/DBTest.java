@@ -12,10 +12,16 @@ public class DBTest {
 	public void testDatabaseConnection() {
 		DBO test = new DBO();
 		Connection c = test.connectDB();
-		test.insertTag("Google", ".com", "https", "<tag>", "innerData", c);
-		assertNotNull(test);
-
+		assertNotNull(c);
 	}
+
+	@Test
+    public void testInsertTag() {
+	    DBO test = new DBO();
+	    Connection c = test.connectDB();
+	    test.insertTag("Google", ".com", "https", "<tag>", "innerData", c);
+        System.out.println("When DBO has a function to pull data, pull and check if inserted data equals new data.");
+    }
 	
 	
 	@Ignore("We don't want to clear the database every time")@Test

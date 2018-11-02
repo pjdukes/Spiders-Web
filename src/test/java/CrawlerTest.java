@@ -2,7 +2,6 @@ import java.util.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-import java.sql.*;
 
 public class CrawlerTest {
 	
@@ -28,6 +27,5 @@ public class CrawlerTest {
 		data = test.getData("http://www.google.com");
 		assertTrue("The value of data should not be 0", data != null);
 	}
-	
 
 }
