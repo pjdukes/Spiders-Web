@@ -1,8 +1,9 @@
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import java.sql.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -67,16 +68,27 @@ public class Crawler {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		//System.out.println(data);
 		
 		return data;
 	}
+	
+	public static void storeData(String link) throws MalformedURLException {
+		DBO dbo = new DBO();
+		Connection c = dbo.connectDB();
+		URL aURL = new URL(link);
+		String protocol = null;
+		String domain = null;
+		String path = null;
+		protocol = aURL.getProtocol();
+		domain = aURL.getHost();
+	    String TLD[] = domain.split("\\.");
+		path = aURL.getPath();
+		//dbo.insertTag(domain, ".".concat(TLD[TLD.length - 1]), protocol, tag, data, c);
+		
+	}
 
 	public static void main(String[] args) {
-		
-		DBO test = new DBO();
-		Connection c = test.connectDB();
-		//test.insertTag("Google", ".com", "https", c);
-		
 		int crawlLimit = 25;
 		int dataLimit = 5;
 		String data = null;
@@ -90,17 +102,17 @@ public class Crawler {
 		linkList = crawl(firstLink, linkList, crawlLimit);
 		for (int i = 0; i < linkList.size() && i < dataLimit; i++) {
 			data = getData(linkList.get(i));
-			//parseData(data)
-			//storeData()
+			//parseData(data, linkList.get(i));
+			try {
+				storeData(linkList.get(i));
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
-		System.out.println("");
-		System.out.println("Limit Reached");
-		System.out.println("Total Number Of Links Found: ");
-		System.out.println(linkList.size());
-		
-		
-		
+		System.out.println("\nLimit Reached");
+		System.out.println("Total Number Of Links Found: \n" + linkList.size());
 
 	}
 }
