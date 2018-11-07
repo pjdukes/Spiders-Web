@@ -1,18 +1,16 @@
-import java.io.IOException;
-import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.sql.Connection;
+import java.util.ArrayList;
+
 public class Crawler {
-	
-	
+
 	public static ArrayList<String> crawl (String firstLink, ArrayList<String> linkList, int limit) {
 		
 		Elements links;
@@ -55,6 +53,9 @@ public class Crawler {
 				continue;
 			}
 		}
+
+        System.out.println("\nLimit Reached");
+        System.out.println("Total Number Of Links Found: \n" + linkList.size());
 		return linkList;
 	}
 	
@@ -86,33 +87,5 @@ public class Crawler {
 		path = aURL.getPath();
 		//dbo.insertTag(domain, ".".concat(TLD[TLD.length - 1]), protocol, tag, data, c);
 		
-	}
-
-	public static void main(String[] args) {
-		int crawlLimit = 25;
-		int dataLimit = 5;
-		String data = null;
-		ArrayList<String> linkList = new ArrayList<>();
-		
-		Scanner scan = new Scanner(System.in);
-		System.out.println("Enter the site to start crawling at: ");
-		String firstLink = scan.nextLine();
-		System.out.println("");
-		
-		linkList = crawl(firstLink, linkList, crawlLimit);
-		for (int i = 0; i < linkList.size() && i < dataLimit; i++) {
-			data = getData(linkList.get(i));
-			//parseData(data, linkList.get(i));
-			try {
-				storeData(linkList.get(i));
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		System.out.println("\nLimit Reached");
-		System.out.println("Total Number Of Links Found: \n" + linkList.size());
-
 	}
 }
