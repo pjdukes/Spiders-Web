@@ -53,5 +53,18 @@ public class DBTest {
 		}
 	}
 	
+	@Test
+	public void testUniqueDomain() {
+		DBO test = new DBO();
+		Connection c = test.connectDB();
+		
+		int count = -1;
+		
+		count = test.uniqueDomainCount(c);
+		assertNotEquals(count, -1);
+	}
+	
+	
+	
 
 }
