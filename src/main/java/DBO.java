@@ -111,6 +111,23 @@ public class DBO {
 		return count;
 
 	}
+	
+	public static int uniqueDomainCount(Connection c) {
+		String sql = "SELECT COUNT(DISTINCT name) AS count FROM Tags";
+		int count = -1;
+		ResultSet rs = null;
+		try {
+			PreparedStatement p = c.prepareStatement(sql);
+			rs = p.executeQuery();
+			count = rs.getInt("count");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		System.out.println(count);
+		return count;
+	}
 
 	public static void main(String[] args) {
 		DBO test = new DBO();
