@@ -111,12 +111,4 @@ public class DBO {
 		return count;
 
 	}
-
-	public static void main(String[] args) {
-		DBO test = new DBO();
-		Connection c = test.connectDB();
-		// test.insertDomain("Google", ".com", "https", c);
-
-	}
-
 }
