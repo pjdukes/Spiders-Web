@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class Crawler {
 
-	public static ArrayList<String> crawl (String firstLink, ArrayList<String> linkList, int limit) {
+	public ArrayList<String> crawl (String firstLink, ArrayList<String> linkList, int limit) {
 		
 		Elements links;
 		Document doc;
@@ -59,7 +59,7 @@ public class Crawler {
 		return linkList;
 	}
 	
-	public static String getData(String link) {
+	public String getData(String link) {
 		String data = "";
 		Document doc = null;
 		
@@ -74,7 +74,7 @@ public class Crawler {
 		return data;
 	}
 	
-	public static void storeData(String link) throws MalformedURLException {
+	public void storeData(String link) throws MalformedURLException {
 		DBO dbo = new DBO();
 		Connection c = dbo.connectDB();
 		URL aURL = new URL(link);
