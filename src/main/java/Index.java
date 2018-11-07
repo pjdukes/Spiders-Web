@@ -15,6 +15,7 @@ public class Index {
         String firstLink = scan.nextLine();
         System.out.println("");
 
+
         linkList = crawler.crawl(firstLink, linkList, crawlLimit);
         for (int i = 0; i < linkList.size() && i < dataLimit; i++) {
             data = crawler.getData(linkList.get(i));
