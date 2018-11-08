@@ -41,11 +41,4 @@ public class Parser {
             e.printStackTrace();
         }
     }
-
-
-
-    public static void main(String[] args) {
-        Parser ps = new Parser();
-        ps.getAndStoreTags("http://www.motherfuckingwebsite.com");
-    }
 }

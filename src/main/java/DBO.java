@@ -4,12 +4,14 @@ import java.nio.file.*;
 import java.io.*;
 
 public class DBO {
-
-	public class StringInt {
+	
+	public class StringInt
+	{
 		String s;
 		int i;
-
-		public StringInt(String str, int num) {
+		
+		public StringInt(String str, int num)
+		{
 			s = str;
 			i = num;
 		}
@@ -32,8 +34,7 @@ public class DBO {
 		return connection;
 	}
 
-	public void insertTag(String d, String TLD, String path, String protocol, String tag, String innerData,
-			Connection c) {
+	public void insertTag(String d, String TLD, String path, String protocol, String tag, String innerData, Connection c) {
 		String sql = "INSERT INTO Tags VALUES(?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement p = c.prepareStatement(sql);
@@ -82,6 +83,7 @@ public class DBO {
 
 		// }
 
+
 		ArrayList<String> lines = new ArrayList();
 		String l = "";
 		while (scanner.hasNextLine()) {
@@ -122,7 +124,7 @@ public class DBO {
 		return count;
 
 	}
-
+	
 	public static int uniqueDomainCount(Connection c) {
 		String sql = "SELECT COUNT(DISTINCT name) AS count FROM Tags";
 		int count = -1;
@@ -139,12 +141,11 @@ public class DBO {
 		System.out.println(count);
 		return count;
 	}
-
+	
 	public static int domainTagCount(String d, Connection c) {
 		String sql = "SELECT COUNT(DISTINCT name) AS count FROM Tags";
 		int count = -1;
 		ResultSet rs = null;
-
 		try {
 			PreparedStatement p = c.prepareStatement(sql);
 			rs = p.executeQuery();
@@ -157,38 +158,12 @@ public class DBO {
 		System.out.println(count);
 		return count;
 	}
-
-	public static ArrayList<StringInt> tldStats(Connection c) {
+	
+	public static ArrayList<StringInt> tldStats(Connection c)
+	{
 		String sql = "SELECT DISTINCT TLD FROM Tags";
 		ArrayList<StringInt> list = new ArrayList();
 		return list;
-
-	}
-
-	public static void exportDataCSV(Connection c, String query, String filename) {
-
-		Runtime rt = Runtime.getRuntime();
-		String[] cmd = {"cmd.exe", "/C", "sqlite3.exe", ".open web.db", ".mode csv", ".output " + filename + ".csv", query};
-		//String[] cmd = {"cmd.exe", "/C", "mkdir runtimetest"};
-
-		Process p = null;
-		
-		try {
-			p = rt.exec(cmd);
-			System.out.println("\n\n\n\n it worked \n\n\n\n");	
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		/*
-		 * try { Statement p = c.createStatement(); p.execute(".mode csv"); }
-		 * catch(Exception e) { e.printStackTrace(); }
-		 * 
-		 * try { Statement p = c.createStatement(); p.execute(".output " +
-		 * filename + ".csv"); } catch(Exception e) { e.printStackTrace(); } try
-		 * { Statement p = c.createStatement(); p.execute(query); }
-		 * catch(Exception e) { e.printStackTrace(); }
-		 */
 	}
 
 	public static void main(String[] args) {
