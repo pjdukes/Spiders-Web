@@ -17,4 +17,7 @@
 
 # Mac Specific
 .DS_Store
+
+# SQLite
+*.exe
 web.db

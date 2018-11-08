@@ -4,9 +4,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.sql.Connection;
 import java.util.ArrayList;
 
 public class Crawler {
@@ -57,35 +54,5 @@ public class Crawler {
         System.out.println("\nLimit Reached");
         System.out.println("Total Number Of Links Found: \n" + linkList.size());
 		return linkList;
-	}
-	
-	public String getData(String link) {
-		String data = "";
-		Document doc = null;
-		
-		try {
-			doc = Jsoup.connect(link).get();
-			data += doc.select("html");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		//System.out.println(data);
-		
-		return data;
-	}
-	
-	public void storeData(String link) throws MalformedURLException {
-		DBO dbo = new DBO();
-		Connection c = dbo.connectDB();
-		URL aURL = new URL(link);
-		String protocol = null;
-		String domain = null;
-		String path = null;
-		protocol = aURL.getProtocol();
-		domain = aURL.getHost();
-	    String TLD[] = domain.split("\\.");
-		path = aURL.getPath();
-		//dbo.insertTag(domain, ".".concat(TLD[TLD.length - 1]), protocol, tag, data, c); // THIS WILL HAVE TO BE CHANGED WITH NEW insertTag() PARAMETERS
-		
 	}
 }

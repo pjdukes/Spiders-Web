@@ -5,6 +5,7 @@ import java.net.MalformedURLException;
 public class Index {
     public static void main(String[] args) {
         Crawler crawler = new Crawler();
+        Parser ps = new Parser();
         int crawlLimit = 25;
         int dataLimit = 5;
         String data = null;
@@ -18,14 +19,7 @@ public class Index {
 
         linkList = crawler.crawl(firstLink, linkList, crawlLimit);
         for (int i = 0; i < linkList.size() && i < dataLimit; i++) {
-            data = crawler.getData(linkList.get(i));
-            //parseData(data, linkList.get(i));
-            try {
-                crawler.storeData(linkList.get(i));
-            } catch (MalformedURLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            ps.getAndStoreTags(linkList.get(i));
         }
     }
 }
