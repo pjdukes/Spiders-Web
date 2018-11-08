@@ -1,0 +1,89 @@
+
+<project name="spidersweb" default="test" basedir=".">
+
+    <!-- Source files -->
+    <property name="main.src.dir" location="src/main/java"/>
+    <property name="test.src.dir" location="src/test/java"/>
+
+    <!-- Build files -->
+    <property name="build.dir" value="build"/>
+    <property name="main.classes.dir" value="build/main"/>
+    <property name="test.classes.dir" value="build/test"/>
+
+    <!-- Jar files -->
+    <property name="main.jar.dir" value="build/jar" />
+    <property name="main.jar" value="${main.jar.dir}/${ant.project.name}.jar" />
+
+    <!-- Create file structure -->
+    <target name="init">
+        <mkdir dir="${main.src.dir}"/>
+        <mkdir dir="${test.src.dir}"/>
+        <mkdir dir="${build.dir}" />
+        <mkdir dir="${main.classes.dir}"/>
+        <mkdir dir="${test.classes.dir}"/>
+    </target>
+
+    <!-- Classpath -->
+    <path id="classpath">
+        <pathelement location="lib/junit-4.12.jar"/>
+        <pathelement location="lib/hamcrest-core-1.3.jar"/>
+    	<pathelement location="lib/jsoup-1.11.3.jar"/>
+    	<pathelement location="lib/sqlite-jdbc-3.23.1.jar"/>
+        <pathelement location="${main.classes.dir}"/>
+    </path>
+
+    <!-- Some Jacoco stuff-->
+    <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+        <classpath path="lib/jacocoant.jar"/>
+    </taskdef>
+
+    <!-- Main compile method -->
+    <target name="main-compile" depends="init">
+        <javac debug="on" includeantruntime="false" srcdir="${main.src.dir}" destdir="${main.classes.dir}">
+            <classpath refid="classpath"/>
+        </javac>
+    </target>
+
+    <!-- Test compile method -->
+    <target name="test-compile" depends="main-compile">
+        <javac debug="on" includeantruntime="false" srcdir="${test.src.dir}" destdir="${test.classes.dir}">
+            <classpath refid="classpath"/>
+        </javac>
+    </target>
+
+    <!-- Running tests -->
+    <target name="test" depends="test-compile">
+        <jacoco:coverage destfile="${test.classes.dir}/jacoco.exec" xmlns:jacoco="antlib:org.jacoco.ant" exclclassloader="sun.reflect.DelegatingClassLoader:javassist.Loader">
+            <junit printsummary="on" haltonfailure="yes" fork="true">
+                <classpath>
+                    <path refid="classpath"/>
+                    <pathelement location="${test.classes.dir}"/>
+                </classpath>
+                <formatter type="brief" usefile="false" />
+                <batchtest>
+                    <fileset dir="${test.src.dir}" includes="**/*Test.java" />
+                </batchtest>
+            </junit>
+        </jacoco:coverage>
+
+        <jacoco:report xmlns:jacoco="antlib:org.jacoco.ant">
+            <executiondata>
+                <file file="${test.classes.dir}/jacoco.exec" />
+            </executiondata>
+            <structure name="Jacoco">
+                <classfiles>
+                    <fileset dir="${main.classes.dir}" />
+                </classfiles>
+                <sourcefiles encoding="UTF-8">
+                    <fileset dir="${main.src.dir}" />
+                </sourcefiles>
+            </structure>
+            <html destdir="${test.classes.dir}/report" />
+        </jacoco:report>
+    </target>
+
+    <!-- Clean build directory -->
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+</project>
