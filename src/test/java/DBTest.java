@@ -13,7 +13,7 @@ public class DBTest {
 	public void testDatabaseConnection() {
 		DBO test = new DBO();
 		Connection c = test.connectDB();
-		test.insertTag("Google", ".com", "/path" "https", "<tag>", "innerData", c);
+		test.insertTag("Google", ".com", "/path", "https", "<tag>", "innerData", c);
 		assertNotNull(test);
 
 	}

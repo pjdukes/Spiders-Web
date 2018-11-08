@@ -40,7 +40,7 @@ public class DBO {
 			PreparedStatement p = c.prepareStatement(sql);
 			p.setString(1, d);
 			p.setString(2, TLD);
-			p.setString(3, path)
+			p.setString(3, path);
 			p.setString(4, protocol);
 			p.setString(5, tag);
 			p.setString(6, innerData);
@@ -162,6 +162,8 @@ public class DBO {
 	public static ArrayList<StringInt> tldStats(Connection c)
 	{
 		String sql = "SELECT DISTINCT TLD FROM Tags";
+		ArrayList<StringInt> list = new ArrayList();
+		return list;
 	}
 
 	public static void main(String[] args) {
