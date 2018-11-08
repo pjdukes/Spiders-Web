@@ -64,6 +64,14 @@ public class DBTest {
 		assertNotEquals(count, -1);
 	}
 	
+	@Test
+	public void testExportCSV() {
+		DBO test = new DBO();
+		Connection c = test.connectDB();
+		
+		test.exportDataCSV(c, "Select * from Tags", "testExportCSV");
+	}
+	
 	
 	
 	
