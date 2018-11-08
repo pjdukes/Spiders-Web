@@ -85,7 +85,7 @@ public class Crawler {
 		domain = aURL.getHost();
 	    String TLD[] = domain.split("\\.");
 		path = aURL.getPath();
-		//dbo.insertTag(domain, ".".concat(TLD[TLD.length - 1]), protocol, tag, data, c);
+		//dbo.insertTag(domain, ".".concat(TLD[TLD.length - 1]), protocol, tag, data, c); // THIS WILL HAVE TO BE CHANGED WITH NEW insertTag() PARAMETERS
 		
 	}
 }

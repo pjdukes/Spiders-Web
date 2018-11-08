@@ -4,6 +4,18 @@ import java.nio.file.*;
 import java.io.*;
 
 public class DBO {
+	
+	public class StringInt
+	{
+		String s;
+		int i;
+		
+		public StringInt(String str, int num)
+		{
+			s = str;
+			i = num;
+		}
+	}
 
 	public Connection connectDB() {
 		try {
@@ -22,15 +34,16 @@ public class DBO {
 		return connection;
 	}
 
-	public void insertTag(String d, String TDL, String protocol, String tag, String innerData, Connection c) {
-		String sql = "INSERT INTO Tags VALUES(?, ?, ?, ?, ?)";
+	public void insertTag(String d, String TLD, String path, String protocol, String tag, String innerData, Connection c) {
+		String sql = "INSERT INTO Tags VALUES(?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement p = c.prepareStatement(sql);
 			p.setString(1, d);
-			p.setString(2, TDL);
-			p.setString(3, protocol);
-			p.setString(4, tag);
-			p.setString(5, innerData);
+			p.setString(2, TLD);
+			p.setString(3, path)
+			p.setString(4, protocol);
+			p.setString(5, tag);
+			p.setString(6, innerData);
 			p.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -94,7 +107,7 @@ public class DBO {
 	}
 
 	public int protocolCount(String protocol, Connection c) {
-		String sql = "SELECT COUNT(*) AS count FROM Tags  WHERE Protocol = ? ";
+		String sql = "SELECT COUNT(*) AS count FROM Tags WHERE Protocol = ? ";
 		int count = -1;
 		ResultSet rs = null;
 		try {
@@ -127,6 +140,28 @@ public class DBO {
 
 		System.out.println(count);
 		return count;
+	}
+	
+	public static int domainTagCount(String d, Connection c) {
+		String sql = "SELECT COUNT(DISTINCT name) AS count FROM Tags";
+		int count = -1;
+		ResultSet rs = null;
+		try {
+			PreparedStatement p = c.prepareStatement(sql);
+			rs = p.executeQuery();
+			count = rs.getInt("count");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		System.out.println(count);
+		return count;
+	}
+	
+	public static ArrayList<StringInt> tldStats(Connection c)
+	{
+		String sql = "SELECT DISTINCT TLD FROM Tags";
 	}
 
 	public static void main(String[] args) {
