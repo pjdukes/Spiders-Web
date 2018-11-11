@@ -63,7 +63,7 @@ public class DBTest {
 		count = test.uniqueDomainCount(c);
 		assertNotEquals(count, -1);
 	}
-	
+	/*
 	@Test
 	public void testExportCSV() {
 		DBO test = new DBO();
@@ -71,7 +71,7 @@ public class DBTest {
 		
 		test.exportDataCSV(c, "Select * from Tags", "testExportCSV");
 	}
-	
+	*/
 	
 	
 	
