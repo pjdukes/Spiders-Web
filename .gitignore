@@ -21,3 +21,6 @@
 # SQLite
 *.exe
 web.db
+
+# Data Export
+*.csv
