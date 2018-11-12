@@ -1,13 +1,15 @@
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.net.MalformedURLException;
 
 public class Index {
     public static void main(String[] args) {
         Crawler crawler = new Crawler();
         Parser ps = new Parser();
+        DBO db = new DBO();
         String data = null;
         ArrayList<String> linkList = new ArrayList<>();
+        Connection c = db.connectDB();
 
         Scanner scan = new Scanner(System.in);
         System.out.println("Enter the site to start crawling at: ");
@@ -21,7 +23,7 @@ public class Index {
 
         linkList = crawler.crawl(firstLink, linkList, crawlLimit);
         for (int i = 0; i < linkList.size() && i < dataLimit; i++) {
-            ps.getAndStoreTags(linkList.get(i));
+            ps.getAndStoreTags(c, linkList.get(i));
         }
         
         System.out.println("\nData has been stored in the database!\n");

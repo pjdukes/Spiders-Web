@@ -8,7 +8,7 @@ import java.sql.Connection;
 
 public class Parser {
 
-    public void getAndStoreTags(String start) {
+    public void getAndStoreTags(Connection c, String start) {
         // domain, tld, path, protocol, tag, innerdata, c
         DBO db = new DBO();
 
@@ -18,7 +18,6 @@ public class Parser {
         String protocol = "";
         String tag = "";
         String innerData = "";
-        Connection c = db.connectDB();
 
         try {
             URL aURL = new URL(start);
