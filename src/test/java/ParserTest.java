@@ -1,15 +1,17 @@
-import java.util.*;
-import static org.junit.Assert.*;
 import org.junit.Test;
-import org.junit.Ignore;
 
+import java.sql.Connection;
+
+import static org.junit.Assert.*;
 
 public class ParserTest {
 
     @Test
     public void testLinkedListSize() {
         Parser ps = new Parser();
-        ps.getAndStoreTags("http://www.google.com");
+        DBO db = new DBO();
+        Connection c = db.connectDB();
+        ps.getAndStoreTags(c, "http://www.google.com");
         assertNotNull(ps);
     }
 }

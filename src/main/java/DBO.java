@@ -26,7 +26,7 @@ public class DBO {
 		Connection connection = null;
 		try {
 			connection = DriverManager.getConnection("jdbc:sqlite:web.db");
-			System.out.println("Connection has been established");
+			System.out.println("Connection to the database has been established");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
