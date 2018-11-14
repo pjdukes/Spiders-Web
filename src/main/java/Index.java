@@ -11,8 +11,21 @@ public class Index {
 		ArrayList<String> linkList = new ArrayList<>();
 		Connection c = db.connectDB();
 		boolean loop = true;
-
 		Scanner scan = new Scanner(System.in);
+		
+		
+		System.out.println("   +----------------------------------------------------------");
+		System.out.println("   :\". /  /  /        Welcome To Spiders Web!");
+		System.out.println("   :.-\". /  /");
+		System.out.println("   : _.-\". /");
+		System.out.println("   :\"  _.-\".");
+		System.out.println("   :-\"\"     \".");
+		System.out.println("   :");
+		System.out.println("   :");
+		System.out.println(" ^.-.^");
+		System.out.println("'^\\+/^`");
+		System.out.println("'/`\"'\\`\n");
+		
 		System.out.println("Enter the site to start crawling at: ");
 		String firstLink = scan.nextLine();
 		System.out.println("Enter the number of sites you would like to crawl: ");
