@@ -9,7 +9,7 @@ public class Index {
 		DBO db = new DBO();
 		String data = null;
 		ArrayList<String> linkList = new ArrayList<>();
-		Connection c = db.connectDB();
+		Connection c = db.connectDB(false);
 		boolean loop = true;
 
 		Scanner scan = new Scanner(System.in);
