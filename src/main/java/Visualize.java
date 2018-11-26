@@ -3,7 +3,7 @@ import org.knowm.xchart.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestChart {
+public class Visualize {
     public void makePieChart(int numSeries, ArrayList<String> al) {
         PieChart chart = new PieChartBuilder().width(800).height(800).build();
 
