@@ -24,3 +24,6 @@ web.db
 
 # Data Export
 *.csv
+mock.db
+
+web.db

@@ -17,7 +17,7 @@ public class DBO {
 		}
 	}
 
-	public Connection connectDB() {
+	public Connection connectDB(boolean flag) {
 		try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e) {
@@ -25,7 +25,14 @@ public class DBO {
 		}
 		Connection connection = null;
 		try {
-			connection = DriverManager.getConnection("jdbc:sqlite:web.db");
+			if (flag)
+			{
+				connection = DriverManager.getConnection("jdbc:sqlite:mock.db");
+			}
+			else
+			{
+				connection = DriverManager.getConnection("jdbc:sqlite:web.db");
+			}
 			System.out.println("Connection to the database has been established");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -51,60 +58,56 @@ public class DBO {
 		}
 	}
 
-	public static void clearDB(Connection c) throws FileNotFoundException {
-		System.out.println("You must recreate the tables now");
-		String sql = "DROP TABLE Tags";
-		try {
-			PreparedStatement p = c.prepareStatement(sql);
-			p.executeUpdate();
-			System.out.println("Database Cleared");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
-		makeTables(c);
-
-	}
-
-	public static void makeTables(Connection c) throws FileNotFoundException {
-
-		String basePath = new File("").getAbsolutePath();
-		System.out.println(basePath);
-
-		String path = new File("setupTables.sql").getAbsolutePath();
-
-		File script = new File(path);
-
-		// Path path = Paths.get("../../../setupTables.sql");
-		// try {
-		Scanner scanner = new Scanner(script);
-		// } catch (FileNotFoundException ex) {
-
-		// }
-
-
-		ArrayList<String> lines = new ArrayList();
-		String l = "";
-		while (scanner.hasNextLine()) {
-			lines.add(scanner.nextLine());
-			System.out.println("Adding " + l + " to arraylist");
-		}
-
-		for (int x = 0; x < lines.size(); x++) {
-			String sql = lines.get(x);
-			System.out.println(sql);
-			try {
-				PreparedStatement p = c.prepareStatement(sql);
-				p.executeUpdate();
-				System.out.println("Table created successfully");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-	}
+//	public static void makeTables(Connection c) throws FileNotFoundException {
+//
+//		String basePath = new File("").getAbsolutePath();
+//		System.out.println(basePath);
+//
+//		String path = new File("setupTables.sql").getAbsolutePath();
+//
+//		File script = new File(path);
+//
+//		// Path path = Paths.get("../../../setupTables.sql");
+//		// try {
+//		Scanner scanner = new Scanner(script);
+//		// } catch (FileNotFoundException ex) {
+//
+//		// }
+//
+//
+//		ArrayList<String> lines = new ArrayList();
+//		String l = "";
+//		while (scanner.hasNextLine()) {
+//			lines.add(scanner.nextLine());
+//			System.out.println("Adding " + l + " to arraylist");
+//		}
+//		
+//		String sql = "DROP TABLE Tags;";
+//		
+//		try {
+//			PreparedStatement p = c.prepareStatement(sql);
+//			p.executeUpdate();
+//			System.out.println("Tables dropped successfully");
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		for (int x = 0; x < lines.size(); x++) {
+//			sql = lines.get(x);
+//			System.out.println(sql);
+//			try {
+//				PreparedStatement p = c.prepareStatement(sql);
+//				p.executeUpdate();
+//				System.out.println("Table created successfully");
+//			} catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+//
+//	}
 
 	public int protocolCount(String protocol, Connection c) {
 		String sql = "SELECT COUNT(*) AS count FROM Tags WHERE Protocol = ? ";
@@ -142,12 +145,14 @@ public class DBO {
 		return count;
 	}
 	
-	public static int domainTagCount(String d, Connection c) {
-		String sql = "SELECT COUNT(DISTINCT name) AS count FROM Tags";
+	public static int domainTagCount(String domain, String tag, Connection c) {
+		String sql = "SELECT COUNT(*) AS count FROM Tags WHERE tag = ? and name = ?";
 		int count = -1;
 		ResultSet rs = null;
 		try {
 			PreparedStatement p = c.prepareStatement(sql);
+			p.setString(1, tag);
+			p.setString(2, domain);
 			rs = p.executeQuery();
 			count = rs.getInt("count");
 		} catch (SQLException e) {
@@ -166,11 +171,6 @@ public class DBO {
 		return list;
 	}
 
-	public static void main(String[] args) {
-		DBO test = new DBO();
-		Connection c = test.connectDB();
-		// test.insertDomain("Google", ".com", "https", c);
 
-	}
 
 }
