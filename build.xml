@@ -9,6 +9,7 @@
     <property name="build.dir" value="build"/>
     <property name="main.classes.dir" value="build/main"/>
     <property name="test.classes.dir" value="build/test"/>
+	<property name="main.dir" value="."/>
 	
     <!-- Library Jar files -->
     <property name="main.jar.dir" value="build/jar" />
@@ -47,7 +48,7 @@
 	
 	<!-- Jar compliation and output -->
 	<target name="jar" depends="main-compile">
-        <jar destfile="${build.dir}/RunnableSpidersWeb.jar" filesetmanifest="mergewithoutmain">
+        <jar destfile="${main.dir}/RunnableSpidersWeb.jar" filesetmanifest="mergewithoutmain">
             <manifest>
                 <attribute name="Main-Class" value="Index"/>
                 <attribute name="Class-Path" value="."/>
