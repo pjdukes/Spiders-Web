@@ -1,6 +1,8 @@
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.sql.*;
+import java.io.*;
 
 public class Index {
 	public static void main(String[] args) {
@@ -25,6 +27,18 @@ public class Index {
 		System.out.println("'^\\+/^`");
 		System.out.println("'/`\"'\\`\n");
 
+		try {
+			db.insertTag("", "", "", "", "", "", c);
+			System.out.println("The database is correctly configured");
+		} catch (SQLException e) {
+			System.out.println("web.db cannot be found or is corrupted");
+			try {
+				db.makeTables(c);
+			} catch (FileNotFoundException e2) {
+				System.out.println("File to create tables not found");
+			}
+		}
+		
 		System.out.println("Enter the site to start crawling at: ");
 		String firstLink = scan.nextLine();
 		System.out.println("Enter the number of sites you would like to crawl: ");

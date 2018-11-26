@@ -41,9 +41,9 @@ public class DBO {
 		return connection;
 	}
 
-	public void insertTag(String d, String TLD, String path, String protocol, String tag, String innerData, Connection c) {
+	public void insertTag(String d, String TLD, String path, String protocol, String tag, String innerData, Connection c) throws SQLException{
 		String sql = "INSERT INTO Tags VALUES(?, ?, ?, ?, ?, ?)";
-		try {
+
 			PreparedStatement p = c.prepareStatement(sql);
 			p.setString(1, d);
 			p.setString(2, TLD);
@@ -52,39 +52,36 @@ public class DBO {
 			p.setString(5, tag);
 			p.setString(6, innerData);
 			p.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 	}
 
 
-//	public static void makeTables(Connection c) throws FileNotFoundException {
-//
-//		String basePath = new File("").getAbsolutePath();
-//		System.out.println(basePath);
-//
-//		String path = new File("setupTables.sql").getAbsolutePath();
-//
-//		File script = new File(path);
-//
-//		// Path path = Paths.get("../../../setupTables.sql");
-//		// try {
-//		Scanner scanner = new Scanner(script);
-//		// } catch (FileNotFoundException ex) {
-//
-//		// }
-//
-//
-//		ArrayList<String> lines = new ArrayList();
-//		String l = "";
-//		while (scanner.hasNextLine()) {
-//			lines.add(scanner.nextLine());
-//			System.out.println("Adding " + l + " to arraylist");
-//		}
-//		
-//		String sql = "DROP TABLE Tags;";
-//		
+	public static void makeTables(Connection c) throws FileNotFoundException {
+
+		String basePath = new File("").getAbsolutePath();
+		System.out.println(basePath);
+
+		String path = new File("setupTables.sql").getAbsolutePath();
+
+		File script = new File(path);
+
+		// Path path = Paths.get("../../../setupTables.sql");
+		// try {
+		Scanner scanner = new Scanner(script);
+		// } catch (FileNotFoundException ex) {
+
+		// }
+
+
+		ArrayList<String> lines = new ArrayList();
+		String l = "";
+		while (scanner.hasNextLine()) {
+			lines.add(scanner.nextLine());
+			System.out.println("Adding " + l + " to arraylist");
+		}
+		
+		//String sql = "DROP TABLE Tags;";
+		
 //		try {
 //			PreparedStatement p = c.prepareStatement(sql);
 //			p.executeUpdate();
@@ -93,21 +90,21 @@ public class DBO {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-//		
-//		for (int x = 0; x < lines.size(); x++) {
-//			sql = lines.get(x);
-//			System.out.println(sql);
-//			try {
-//				PreparedStatement p = c.prepareStatement(sql);
-//				p.executeUpdate();
-//				System.out.println("Table created successfully");
-//			} catch (SQLException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
-//
-//	}
+		String sql;
+		for (int x = 0; x < lines.size(); x++) {
+			sql = lines.get(x);
+			System.out.println(sql);
+			try {
+				PreparedStatement p = c.prepareStatement(sql);
+				p.executeUpdate();
+				System.out.println("Table created successfully");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
 
 	public int protocolCount(String protocol, Connection c) {
 		String sql = "SELECT COUNT(*) AS count FROM Tags WHERE Protocol = ? ";
