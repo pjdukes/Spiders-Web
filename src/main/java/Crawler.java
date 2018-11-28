@@ -22,10 +22,12 @@ public class Crawler {
 				}
 			}
 		} catch (IOException e) {
-			System.err.println("Please provide a valid URL or Link");
+			System.out.println("Please provide a valid URL or Link");
+			System.out.println("Please make sure the link includes HTTP:// HTTPS:// and www. ");
+			System.out.println("Here is an example of a valid URL: http://www.google.com");
 		}
 
-		for (int i = 0; i < limit; i++) {
+		for (int i = 1; i <= limit; i++) {
 			try {
 				if (i >= linkList.size()) {
 					System.out.println("All Links Searched Exiting.");
@@ -43,7 +45,7 @@ public class Crawler {
 						linkList.add(link.attr("abs:href"));
 					}
 				}
-				System.out.println(linkList.size());
+				System.out.println("Total number of links found: " + linkList.size());
 
 			} catch (IOException e) {
 				System.err.println("Bad Link Encountered... Moving On");

@@ -13,7 +13,6 @@ public class Index {
 		ArrayList<String> linkList = new ArrayList<>();
 		Connection c = db.connectDB(false);
 		boolean loop = true;
-		String tmp;
 		Scanner scan = new Scanner(System.in);
 
 		System.out.println("   +----------------------------------------------------------");
@@ -74,8 +73,7 @@ public class Index {
 					case "1":
 						// Make chart
 						System.out.println("Would you like to save the chart? Y/n");
-						tmp = scan.next();
-						if (tmp.substring(0, 1).toLowerCase().equals("y")) {
+						if (scan.next().substring(0, 1).toLowerCase().equals("y")) {
 							// Save file
 							System.out.println("File saved");
 						}
@@ -83,8 +81,7 @@ public class Index {
 					case "2":
 						// Make chart
 						System.out.println("Would you like to save the chart? Y/n");
-						tmp = scan.next();
-						if (tmp.substring(0, 1).toLowerCase().equals("y")) {
+						if (scan.next().substring(0, 1).toLowerCase().equals("y")) {
 							// Save file
 							System.out.println("File saved");
 						}
@@ -110,8 +107,7 @@ public class Index {
 					case "1":
 						// Make chart
 						System.out.println("Would you like to save the chart? Y/n");
-						tmp = scan.next();
-						if (tmp.substring(0, 1).toLowerCase().equals("y")) {
+						if (scan.next().substring(0, 1).toLowerCase().equals("y")) {
 							// Save file
 							System.out.println("File saved");
 						}
@@ -119,8 +115,7 @@ public class Index {
 					case "2":
 						// Make chart
 						System.out.println("Would you like to save the chart? Y/n");
-						tmp = scan.next();
-						if (tmp.substring(0, 1).toLowerCase().equals("y")) {
+						if (scan.next().substring(0, 1).toLowerCase().equals("y")) {
 							// Save file
 							System.out.println("File saved");
 						}
