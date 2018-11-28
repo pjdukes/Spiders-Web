@@ -10,7 +10,7 @@ import java.sql.*;
 public class DBTest {
 
 	@Test
-	public void testDatabaseConnection() {
+	public void testDatabaseConnection() throws SQLException {
 		DBO test = new DBO();
 		Connection c = test.connectDB(true);
 		test.insertTag("Google", ".com", "/path", "https", "<tag>", "innerData", c);
@@ -84,9 +84,9 @@ public class DBTest {
 		//System.out.println("\n\n\n" + count + "\n\n\n");
 		assertNotEquals(count, -1);
 	}
-	
-	
-	
-	
+
+
+
+
 
 }
