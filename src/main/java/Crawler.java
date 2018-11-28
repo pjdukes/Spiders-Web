@@ -21,10 +21,11 @@ public class Crawler {
 					linkList.add(link.attr("abs:href"));
 				}
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			System.out.println("Please provide a valid URL or Link");
 			System.out.println("Please make sure the link includes HTTP:// HTTPS:// and www. ");
 			System.out.println("Here is an example of a valid URL: http://www.google.com");
+			System.exit(0);
 		}
 
 		for (int i = 1; i <= limit; i++) {
