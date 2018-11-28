@@ -17,6 +17,14 @@ public class DBTest {
 		assertNotNull(test);
 
 	}
+	
+	@Test
+	public void testExportAsCSV() throws SQLException, IOException {
+		DBO test = new DBO();
+		Connection c = test.connectDB(true);
+		int ret = test.exportAsCSV("testExport.csv", c);
+		assertEquals(1, ret);
+	}
 
 	//@Ignore("We don't want to clear the database every time we test")
 //	@Test

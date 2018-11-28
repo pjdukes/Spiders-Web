@@ -40,6 +40,41 @@ public class DBO {
 		}
 		return connection;
 	}
+	
+	public int exportAsCSV(String filename, Connection c) throws IOException
+	{
+		
+		FileWriter f = new FileWriter(filename);
+		String sql = "SELECT * FROM Tags";
+		ResultSet data = null;
+		try {
+			Statement s = c.createStatement();
+			data = s.executeQuery(sql);
+			while (data.next())
+			{
+				f.append(data.getString(1));
+				f.append(',');
+				f.append(data.getString(2));
+				f.append(',');
+				f.append(data.getString(3));
+				f.append(',');
+				f.append(data.getString(4));
+				f.append(',');
+				f.append(data.getString(5));
+				f.append(',');
+				f.append(data.getString(6));
+				f.append('\n');
+			}
+			f.flush();
+			f.close();
+			
+			return 1;
+		} catch (SQLException e) {
+			return 0;
+		}
+				
+		
+	}
 
 	public void insertTag(String d, String TLD, String path, String protocol, String tag, String innerData, Connection c) throws SQLException{
 		String sql = "INSERT INTO Tags VALUES(?, ?, ?, ?, ?, ?)";
