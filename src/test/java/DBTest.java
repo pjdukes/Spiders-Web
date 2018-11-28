@@ -10,12 +10,20 @@ import java.sql.*;
 public class DBTest {
 
 	@Test
-	public void testDatabaseConnection() {
+	public void testDatabaseConnection() throws SQLException {
 		DBO test = new DBO();
 		Connection c = test.connectDB(true);
 		test.insertTag("Google", ".com", "/path", "https", "<tag>", "innerData", c);
 		assertNotNull(test);
 
+	}
+	
+	@Test
+	public void testExportAsCSV() throws SQLException, IOException {
+		DBO test = new DBO();
+		Connection c = test.connectDB(true);
+		int ret = test.exportAsCSV("testExport.csv", c);
+		assertEquals(1, ret);
 	}
 
 	//@Ignore("We don't want to clear the database every time we test")
