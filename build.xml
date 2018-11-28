@@ -47,7 +47,7 @@
     </target>
 	
 	<!-- Jar compliation and output -->
-	<target name="jar" depends="main-compile">
+	<target name="jar" depends="test">
         <jar destfile="${main.dir}/RunnableSpidersWeb.jar" filesetmanifest="mergewithoutmain">
             <manifest>
                 <attribute name="Main-Class" value="Index"/>
