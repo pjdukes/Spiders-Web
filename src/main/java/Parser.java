@@ -26,7 +26,8 @@ public class Parser {
             path = aURL.getPath();
             protocol = aURL.getProtocol();
         } catch (MalformedURLException mex) {
-            mex.printStackTrace();
+        	System.out.println("The following URL encountered errors when being stored to the database: " + start);
+        	System.out.println("This URL will not be stored to the database");
         }
 
         Document doc;
