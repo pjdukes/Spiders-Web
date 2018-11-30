@@ -5,16 +5,15 @@ import java.sql.*;
 import java.io.*;
 
 public class Index {
-	public static void main(String[] args) {
-		Crawler crawler = new Crawler();
-		Parser ps = new Parser();
-		DBO db = new DBO();
-		String data = null;
-		ArrayList<String> linkList = new ArrayList<>();
-		Connection c = db.connectDB(false);
-		boolean loop = true;
+	
+	/**
+	 * main
+	 * Querys user for site to crawl, and number of sights to crawl and store
+	 * args - not used
+	 */
+	public static void main (String args[]) {
+		//Introduction
 		Scanner scan = new Scanner(System.in);
-
 		System.out.println("   +----------------------------------------------------------");
 		System.out.println("   :\". /  /  /        Welcome To Spiders Web!");
 		System.out.println("   :.-\". /  /");
@@ -26,6 +25,35 @@ public class Index {
 		System.out.println(" ^.-.^");
 		System.out.println("'^\\+/^`");
 		System.out.println("'/`\"'\\`\n");
+		
+		System.out.println("Enter the site to start crawling at: ");
+		String firstLink = scan.nextLine();
+		System.out.println("Enter the number of sites you would like to crawl: ");
+		int crawlLimit = scan.nextInt();
+		System.out.println("Enter the number of sites that you would like to store in the data base: ");
+		int dataLimit = scan.nextInt();
+		System.out.println("");
+		scan.close();
+		indexMain(firstLink, dataLimit, crawlLimit, true);
+	}
+	
+	/**
+	 * indexMain
+	 * firstLink - First link to crawl
+	 * dataLimit - Number of links (maximum) to store HTML
+	 * crawlLimit - Number of links (maximum) to crawl
+	 * operateRecord - Whether or not to query user for options to display data
+	 * @return True if closes successfully
+	 */
+	public static boolean indexMain(String firstLink, int dataLimit, int crawlLimit, boolean operateRecord) {
+		Crawler crawler = new Crawler();
+		Parser ps = new Parser();
+		DBO db = new DBO();
+		String data = null;
+		ArrayList<String> linkList = new ArrayList<>();
+		Connection c = db.connectDB(false);
+		
+		
 
 		try {
 			db.insertTag("", "", "", "", "", "", c);
@@ -38,14 +66,6 @@ public class Index {
 				System.out.println("File to create tables not found");
 			}
 		}
-		
-		System.out.println("Enter the site to start crawling at: ");
-		String firstLink = scan.nextLine();
-		System.out.println("Enter the number of sites you would like to crawl: ");
-		int crawlLimit = scan.nextInt();
-		System.out.println("Enter the number of sites that you would like to store in the data base: ");
-		int dataLimit = scan.nextInt();
-		System.out.println("");
 
 		linkList = crawler.crawl(firstLink, linkList, crawlLimit);
 		System.out.println("Crawling finished... data is being stored to the database, this may take some time");
@@ -54,6 +74,17 @@ public class Index {
 		}
 		System.out.println("\nData has been stored in the database!\n");
 
+		return indexRecord(operateRecord);
+	}
+	
+	public static boolean indexRecord(boolean operate) {
+		Scanner scan = new Scanner(System.in);
+		boolean loop = true;
+		
+		if (operate == false) {
+			return true;
+		}
+		
 		while (loop) {
 			System.out.println("What would you like to do now?");
 			System.out.println("[1]: Get the data on all TLDs");
@@ -143,7 +174,9 @@ public class Index {
 				break;
 			}
 		}
-
+		
 		System.out.println("Program Exiting");
+		scan.close();
+		return true;
 	}
 }

@@ -48,7 +48,7 @@
 	
 	<!-- Jar compliation and output -->
 	<target name="jar" depends="test">
-        <jar destfile="${main.dir}/RunnableSpidersWeb.jar" filesetmanifest="mergewithoutmain">
+        <jar destfile="${build.dir}/RunnableSpidersWeb.jar" filesetmanifest="mergewithoutmain">
             <manifest>
                 <attribute name="Main-Class" value="Index"/>
                 <attribute name="Class-Path" value="."/>
