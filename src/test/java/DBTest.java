@@ -1,20 +1,56 @@
 
 import java.util.*;
 import static org.junit.Assert.*;
-import org.junit.Ignore;
+import org.junit.* ;
 import org.junit.Test;
 import java.io.*;
 
 import java.sql.*;
 
 public class DBTest {
-
+	
+	@BeforeClass
+	public static void setupDatabase() throws IOException, SQLException
+	{
+		File f = new File("mock.db");
+		if (f.createNewFile())
+		{
+			System.out.println("mock.db created successfully");
+			DBO test = new DBO();
+			Connection c = test.connectDB(true);
+			test.makeTables(c);
+			c.close();
+		}
+		else 
+		{
+			System.out.println("Failed to create mock.db");			
+		}
+		
+	}
+	
+//	@AfterClass
+//	public static void deleteDatabase()
+//	{
+//		File f = new File("mock.db");
+//		System.out.println("f = " + f.getAbsoluteFile());
+//		
+//		if(f.delete()) 
+//        { 
+//            System.out.println("File deleted successfully"); 
+//        } 
+//        else
+//        { 
+//            System.out.println("Failed to delete the file"); 
+//        } 
+//	}
+	
 	@Test
 	public void testDatabaseConnection() throws SQLException {
 		DBO test = new DBO();
 		Connection c = test.connectDB(true);
 		test.insertTag("Google", ".com", "/path", "https", "<tag>", "innerData", c);
 		assertNotNull(test);
+		c.close();
 
 	}
 	
@@ -24,6 +60,7 @@ public class DBTest {
 		Connection c = test.connectDB(true);
 		int ret = test.exportAsCSV("testExport.csv", c);
 		assertEquals(1, ret);
+		c.close();
 	}
 
 	//@Ignore("We don't want to clear the database every time we test")
@@ -41,11 +78,12 @@ public class DBTest {
 //	}
 
 	@Test
-	public void testProtocolQuery() {
+	public void testProtocolQuery() throws SQLException {
 		DBO test = new DBO();
 		Connection c = test.connectDB(true);
 		int t = test.protocolCount("https", c);
 		assertNotEquals(-1, t);
+		c.close();
 	}
 	
 	//@Ignore("Depreciated")
@@ -62,7 +100,7 @@ public class DBTest {
 //	}
 	
 	@Test
-	public void testUniqueDomain() {
+	public void testUniqueDomain() throws SQLException{
 		DBO test = new DBO();
 		Connection c = test.connectDB(true);
 		
@@ -70,6 +108,7 @@ public class DBTest {
 		
 		count = test.uniqueDomainCount(c);
 		assertNotEquals(count, -1);
+		c.close();
 	}
 	/*
 	@Test
@@ -82,7 +121,7 @@ public class DBTest {
 	*/
 	
 	@Test
-	public void domainTagCountTest() {
+	public void domainTagCountTest() throws SQLException {
 		DBO test = new DBO();
 		Connection c = test.connectDB(true);
 		
@@ -91,6 +130,7 @@ public class DBTest {
 		count = test.domainTagCount("www.google.com", "html", c);
 		//System.out.println("\n\n\n" + count + "\n\n\n");
 		assertNotEquals(count, -1);
+		c.close();
 	}
 	
 	
