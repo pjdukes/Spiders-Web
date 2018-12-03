@@ -104,6 +104,22 @@ public class DBO {
 
 	}
 
+	public ArrayList<String> getTlds(Connection c) {
+	    ArrayList<String> list = new ArrayList<>();
+	    ResultSet rs;
+	    String sql = "SELECT DISTINCT TLD FROM Tags";
+	    try {
+	        PreparedStatement p = c.prepareStatement(sql);
+	        rs = p.executeQuery(sql);
+	        while (rs.next()) {
+                list.add(rs.getString("TLD"));
+            }
+        } catch (SQLException e) {
+	        e.printStackTrace();
+        }
+        return list;
+    }
+
 	public static void makeTables(Connection c) throws FileNotFoundException {
 
 		String basePath = new File("").getAbsolutePath();

@@ -54,6 +54,16 @@ public class DBTest {
 		assertNotEquals((int)testVals.get(0), -1);
 		c.close();
 	}
+
+	@Test
+	public void testGetTlds() throws SQLException {
+		DBO test = new DBO();
+		Connection c = test.connectDB(true);
+		ArrayList<String> list;
+		list = test.getTlds(c);
+		assertNotNull(list);
+		c.close();
+	}
 	
 	@Test
 	public void testDatabaseConnection() throws SQLException {
