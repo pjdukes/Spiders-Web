@@ -6,7 +6,7 @@ import org.junit.Test;
 public class CrawlerTest {
 	
 	@Test
-	public void testLinkedListSize() {
+	public void testLinkListSize() {
 		Crawler test = new Crawler();
 		ArrayList<String> linkList = new ArrayList<>();
 		test.crawl("http://www.google.com", linkList, 1);
