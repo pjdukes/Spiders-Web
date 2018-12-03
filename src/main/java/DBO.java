@@ -4,14 +4,12 @@ import java.nio.file.*;
 import java.io.*;
 
 public class DBO {
-	
-	public class StringInt
-	{
+
+	public class StringInt {
 		String s;
 		int i;
-		
-		public StringInt(String str, int num)
-		{
+
+		public StringInt(String str, int num) {
 			s = str;
 			i = num;
 		}
@@ -25,12 +23,9 @@ public class DBO {
 		}
 		Connection connection = null;
 		try {
-			if (flag)
-			{
+			if (flag) {
 				connection = DriverManager.getConnection("jdbc:sqlite:mock.db");
-			}
-			else
-			{
+			} else {
 				connection = DriverManager.getConnection("jdbc:sqlite:web.db");
 			}
 			System.out.println("Connection to the database has been established");
@@ -40,18 +35,16 @@ public class DBO {
 		}
 		return connection;
 	}
-	
-	public int exportAsCSV(String filename, Connection c) throws IOException
-	{
-		
+
+	public int exportAsCSV(String filename, Connection c) throws IOException {
+
 		FileWriter f = new FileWriter(filename);
 		String sql = "SELECT * FROM Tags";
 		ResultSet data = null;
 		try {
 			Statement s = c.createStatement();
 			data = s.executeQuery(sql);
-			while (data.next())
-			{
+			while (data.next()) {
 				f.append(data.getString(1));
 				f.append(',');
 				f.append(data.getString(2));
@@ -67,29 +60,49 @@ public class DBO {
 			}
 			f.flush();
 			f.close();
-			
+
 			return 1;
 		} catch (SQLException e) {
 			return 0;
 		}
-				
+
+	}
+
+	public ArrayList<Integer> queryByTag(ArrayList<String> s, Connection c) {
+		ArrayList<Integer> results = new ArrayList<Integer>();
+		for (String str : s){
+			ResultSet rs;
+			String sql = "SELECT COUNT(*) AS count FROM Tags WHERE tag = ?";
+			try {
+				PreparedStatement p = c.prepareStatement(sql);
+				p.setString(1, str);
+				rs = p.executeQuery();
+				int count = rs.getInt("count");
+				results.add(count);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return results;
+		
 		
 	}
 
-	public void insertTag(String d, String TLD, String path, String protocol, String tag, String innerData, Connection c) throws SQLException{
+	public void insertTag(String d, String TLD, String path, String protocol, String tag, String innerData,
+			Connection c) throws SQLException {
 		String sql = "INSERT INTO Tags VALUES(?, ?, ?, ?, ?, ?)";
 
-			PreparedStatement p = c.prepareStatement(sql);
-			p.setString(1, d);
-			p.setString(2, TLD);
-			p.setString(3, path);
-			p.setString(4, protocol);
-			p.setString(5, tag);
-			p.setString(6, innerData);
-			p.executeUpdate();
+		PreparedStatement p = c.prepareStatement(sql);
+		p.setString(1, d);
+		p.setString(2, TLD);
+		p.setString(3, path);
+		p.setString(4, protocol);
+		p.setString(5, tag);
+		p.setString(6, innerData);
+		p.executeUpdate();
 
 	}
-
 
 	public static void makeTables(Connection c) throws FileNotFoundException {
 
@@ -107,24 +120,23 @@ public class DBO {
 
 		// }
 
-
 		ArrayList<String> lines = new ArrayList();
 		String l = "";
 		while (scanner.hasNextLine()) {
 			lines.add(scanner.nextLine());
 			System.out.println("Adding " + l + " to arraylist");
 		}
-		
-		//String sql = "DROP TABLE Tags;";
-		
-//		try {
-//			PreparedStatement p = c.prepareStatement(sql);
-//			p.executeUpdate();
-//			System.out.println("Tables dropped successfully");
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+
+		// String sql = "DROP TABLE Tags;";
+
+		// try {
+		// PreparedStatement p = c.prepareStatement(sql);
+		// p.executeUpdate();
+		// System.out.println("Tables dropped successfully");
+		// } catch (SQLException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
 		String sql;
 		for (int x = 0; x < lines.size(); x++) {
 			sql = lines.get(x);
@@ -159,7 +171,7 @@ public class DBO {
 		return count;
 
 	}
-	
+
 	public static int uniqueDomainCount(Connection c) {
 		String sql = "SELECT COUNT(DISTINCT name) AS count FROM Tags";
 		int count = -1;
@@ -176,7 +188,7 @@ public class DBO {
 		System.out.println(count);
 		return count;
 	}
-	
+
 	public static int domainTagCount(String domain, String tag, Connection c) {
 		String sql = "SELECT COUNT(*) AS count FROM Tags WHERE tag = ? and name = ?";
 		int count = -1;
@@ -195,14 +207,11 @@ public class DBO {
 		System.out.println(count);
 		return count;
 	}
-	
-	public static ArrayList<StringInt> tldStats(Connection c)
-	{
+
+	public static ArrayList<StringInt> tldStats(Connection c) {
 		String sql = "SELECT DISTINCT TLD FROM Tags";
 		ArrayList<StringInt> list = new ArrayList();
 		return list;
 	}
-
-
 
 }

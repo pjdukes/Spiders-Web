@@ -44,6 +44,17 @@ public class DBTest {
 //        } 
 //	}
 	
+	@Test 
+	public void testQueryByTag() throws SQLException {
+		DBO test = new DBO();
+		Connection c = test.connectDB(true);
+		ArrayList<String> testArray = new ArrayList<String>();
+		testArray.add("<p>");
+		ArrayList<Integer> testVals = test.queryByTag(testArray, c);
+		assertNotEquals((int)testVals.get(0), -1);
+		c.close();
+	}
+	
 	@Test
 	public void testDatabaseConnection() throws SQLException {
 		DBO test = new DBO();
