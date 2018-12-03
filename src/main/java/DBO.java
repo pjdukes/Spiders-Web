@@ -107,15 +107,31 @@ public class DBO {
 	public ArrayList<String> getTlds(Connection c) {
 	    ArrayList<String> list = new ArrayList<>();
 	    ResultSet rs;
-	    String sql = "SELECT DISTINCT TLD FROM Tags";
+	    String sql = "SELECT DISTINCT TLD AS topLD FROM Tags";
 	    try {
 	        PreparedStatement p = c.prepareStatement(sql);
 	        rs = p.executeQuery(sql);
 	        while (rs.next()) {
-                list.add(rs.getString("TLD"));
+                list.add(rs.getString("topLD"));
             }
         } catch (SQLException e) {
 	        e.printStackTrace();
+        }
+        return list;
+    }
+
+    public ArrayList<String> getDomains(Connection c) {
+        ArrayList<String> list = new ArrayList<>();
+        ResultSet rs;
+        String sql = "SELECT DISTINCT name AS domain FROM Tags";
+        try {
+            PreparedStatement p = c.prepareStatement(sql);
+            rs = p.executeQuery(sql);
+            while (rs.next()) {
+                list.add(rs.getString("domain"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return list;
     }

@@ -64,6 +64,16 @@ public class DBTest {
 		assertNotNull(list);
 		c.close();
 	}
+
+    @Test
+    public void testGetDomains() throws SQLException {
+        DBO test = new DBO();
+        Connection c = test.connectDB(true);
+        ArrayList<String> list;
+        list = test.getDomains(c);
+        assertNotNull(list);
+        c.close();
+    }
 	
 	@Test
 	public void testDatabaseConnection() throws SQLException {
