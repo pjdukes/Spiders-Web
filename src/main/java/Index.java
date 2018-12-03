@@ -45,7 +45,9 @@ public class Index {
 	 * operateRecord - Whether or not to query user for options to display data
 	 * @return True if closes successfully
 	 */
-	public static boolean indexMain(String firstLink, int dataLimit, int crawlLimit, boolean operateRecord) {
+	public static boolean indexMain(String firstLink, int dataLimit, int crawlLimit, boolean operateRecord) throws IndexOutOfBoundsException {
+		if (firstLink != null)
+			throw new IndexOutOfBoundsException("Worked");
 		Crawler crawler = new Crawler();
 		Parser ps = new Parser();
 		DBO db = new DBO();
