@@ -110,7 +110,7 @@ public class DBO {
 	    String sql = "SELECT DISTINCT TLD AS topLD FROM Tags";
 	    try {
 	        PreparedStatement p = c.prepareStatement(sql);
-	        rs = p.executeQuery(sql);
+	        rs = p.executeQuery();
 	        while (rs.next()) {
                 list.add(rs.getString("topLD"));
             }
@@ -126,7 +126,7 @@ public class DBO {
         String sql = "SELECT DISTINCT name AS domain FROM Tags";
         try {
             PreparedStatement p = c.prepareStatement(sql);
-            rs = p.executeQuery(sql);
+            rs = p.executeQuery();
             while (rs.next()) {
                 list.add(rs.getString("domain"));
             }
