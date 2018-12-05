@@ -5,15 +5,6 @@ import java.io.*;
 
 public class DBO {
 
-	public class StringInt {
-		String s;
-		int i;
-
-		public StringInt(String str, int num) {
-			s = str;
-			i = num;
-		}
-	}
 
 	public Connection connectDB(boolean flag) {
 		try {
@@ -255,10 +246,5 @@ public static void makeTables(Connection c) throws FileNotFoundException {
 		return count;
 	}
 
-	public static ArrayList<StringInt> tldStats(Connection c) {
-		String sql = "SELECT DISTINCT TLD FROM Tags";
-		ArrayList<StringInt> list = new ArrayList();
-		return list;
-	}
 
 }
