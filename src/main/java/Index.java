@@ -46,8 +46,8 @@ public class Index {
 	 * @return True if closes successfully
 	 */
 	public static boolean indexMain(String firstLink, int dataLimit, int crawlLimit, boolean operateRecord) throws IndexOutOfBoundsException {
-		if (firstLink != null)
-			throw new IndexOutOfBoundsException("Worked");
+		//if (firstLink != null)
+			//throw new IndexOutOfBoundsException("Worked");
 		Crawler crawler = new Crawler();
 		Parser ps = new Parser();
 		DBO db = new DBO();

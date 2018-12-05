@@ -136,8 +136,10 @@ public class DBO {
         return list;
     }
 
-	public static void makeTables(Connection c) throws FileNotFoundException {
-
+public static void makeTables(Connection c) throws FileNotFoundException {
+		
+		
+		/*
 		String basePath = new File("").getAbsolutePath();
 		System.out.println(basePath);
 
@@ -169,7 +171,19 @@ public class DBO {
 		// // TODO Auto-generated catch block
 		// e.printStackTrace();
 		// }
-		String sql;
+		 */
+		String sql = "CREATE TABLE Tags(name text, TLD text, path text, protocol text, tag text, innerData text)";
+		
+		try {
+			PreparedStatement p = c.prepareStatement(sql);
+			p.executeUpdate();
+			System.out.println("Table created successfully");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		/*
 		for (int x = 0; x < lines.size(); x++) {
 			sql = lines.get(x);
 			System.out.println(sql);
@@ -182,6 +196,7 @@ public class DBO {
 				e.printStackTrace();
 			}
 		}
+		*/
 
 	}
 
