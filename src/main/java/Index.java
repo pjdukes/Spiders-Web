@@ -121,28 +121,34 @@ public class Index {
 					case "1":
 					    ArrayList<String> al1 = new ArrayList<>();
 					    ArrayList<Integer> al2 = new ArrayList<>();
+					    String filename1 = null;
 						int flag1 = 0;
 						System.out.println("Would you like to save the chart? Y/N");
 						if (scan.next().substring(0, 1).toLowerCase().equals("y")) {
+						    System.out.println("What would you like to name the file?");
+                            filename1 = scan.next();
 							flag1 = 1;
                             System.out.println("File will be saved");
 						}
                         al1 = db.getTlds(c);
 						al2 = db.queryByTld(c);
-						v.makePieChart(al1, al2, flag1, "testChart");
+						v.makePieChart(al1, al2, flag1, filename1);
 						break;
 					case "2":
                         ArrayList<String> al3 = new ArrayList<>();
                         ArrayList<Integer> al4 = new ArrayList<>();
+                        String filename2 = null;
                         int flag2 = 0;
                         System.out.println("Would you like to save the chart? Y/N");
                         if (scan.next().substring(0, 1).toLowerCase().equals("y")) {
+                            System.out.println("What would you like to name the file?");
+                            filename2 = scan.next();
                             flag2 = 1;
                             System.out.println("File will be saved");
                         }
                         al3 = db.getTlds(c);
                         al4 = db.queryByTld(c);
-                        v.makeBarChart(al3, al4, flag2, "testChart");
+                        v.makeBarChart(al3, al4, flag2, filename2);
 						break;
 					case "3":
 						loop = false;
@@ -165,28 +171,34 @@ public class Index {
 					case "1":
                         ArrayList<String> al1 = new ArrayList<>();
                         ArrayList<Integer> al2 = new ArrayList<>();
+                        String filename1 = null;
                         int flag1 = 0;
                         System.out.println("Would you like to save the chart? Y/N");
                         if (scan.next().substring(0, 1).toLowerCase().equals("y")) {
+                            System.out.println("What would you like to name the file?");
+                            filename1 = scan.next();
                             flag1 = 1;
                             System.out.println("File will be saved");
                         }
                         al1 = db.getDomains(c);
                         al2 = db.queryByDomain(c);
-                        v.makePieChart(al1, al2, flag1, "testChart");
+                        v.makePieChart(al1, al2, flag1, filename1);
 						break;
 					case "2":
                         ArrayList<String> al3 = new ArrayList<>();
                         ArrayList<Integer> al4 = new ArrayList<>();
+                        String filename2 = null;
                         int flag2 = 0;
                         System.out.println("Would you like to save the chart? Y/N");
                         if (scan.next().substring(0, 1).toLowerCase().equals("y")) {
+                            System.out.println("What would you like to name the file?");
+                            filename2 = scan.next();
                             flag2 = 1;
                             System.out.println("File will be saved");
                         }
                         al3 = db.getDomains(c);
                         al4 = db.queryByDomain(c);
-                        v.makeBarChart(al3, al4, flag2, "testChart");
+                        v.makeBarChart(al3, al4, flag2, filename2);
 						break;
 					case "3":
 						loop = false;
