@@ -85,6 +85,7 @@ public class Index {
 	
 	/**
 	 * indexRecord
+	 * Queries user for data usage in the form of visual charts and .csv outputs
 	 * boolean operate
 	 * DBO db - A database object which allows parsing of data 
 	 * 		from a database connection to query and retrive data
