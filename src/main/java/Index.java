@@ -6,6 +6,8 @@ import java.io.*;
 
 public class Index {
 	
+	public static final Scanner scan = new Scanner(System.in);
+	
 	/**
 	 * main
 	 * Querys user for site to crawl, and number of sights to crawl and store
@@ -13,7 +15,7 @@ public class Index {
 	 */
 	public static void main (String args[]) {
 		//Introduction
-		Scanner scan = new Scanner(System.in);
+		
 		System.out.println("   +----------------------------------------------------------");
 		System.out.println("   :\". /  /  /        Welcome To Spiders Web!");
 		System.out.println("   :.-\". /  /");
@@ -30,10 +32,12 @@ public class Index {
 		String firstLink = scan.nextLine();
 		System.out.println("Enter the number of sites you would like to crawl: ");
 		int crawlLimit = scan.nextInt();
+		scan.nextLine();
 		System.out.println("Enter the number of sites that you would like to store in the data base: ");
 		int dataLimit = scan.nextInt();
+		scan.nextLine();
 		System.out.println("");
-		scan.close();
+		//scan.close();
 		indexMain(firstLink, dataLimit, crawlLimit, true);
 	}
 	
@@ -54,7 +58,7 @@ public class Index {
 		String data = null;
 		ArrayList<String> linkList = new ArrayList<>();
 		Connection c = db.connectDB(false);
-		
+	
 		
 
 		try {
@@ -80,12 +84,17 @@ public class Index {
 	}
 	
 	public static boolean indexRecord(boolean operate) {
-		Scanner scan = new Scanner(System.in);
 		boolean loop = true;
 		
 		if (operate == false) {
 			return true;
 		}
+		
+//		System.out.println("TESTING SCANNER, PLEASE INPUT SOMETHING");
+//		String b = scan.next();
+//		System.out.println("b = " + b);
+		
+		
 		
 		while (loop) {
 			System.out.println("What would you like to do now?");
