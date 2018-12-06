@@ -8,6 +8,12 @@ import java.util.ArrayList;
 
 public class Crawler {
 
+	/**
+	 * crawl
+	 * String firstLink - The link to start crawling first
+	 * ArrayList<String> linkList - A list containing all links
+	 * int limit - at most, this many sites can be crawled
+	 */
 	public ArrayList<String> crawl (String firstLink, ArrayList<String> linkList, int limit) {
 		
 		Elements links;

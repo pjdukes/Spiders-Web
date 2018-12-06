@@ -100,12 +100,14 @@ public class DBO {
 
 	/**
 	 * insertTag
-	 * String d
-	 * String TLD
-	 * String path
-	 * String protocol
-	 * String tag
-	 * String innerData
+	 * Inserts a single tag into the connected database
+	 * String d - Domain
+	 * String TLD - Top level domain of link
+	 * String path - Full path
+	 * String protocol - Internet transfer protocol as detected
+	 * String tag - HTML tag to be stored
+	 * String innerData - Inner data of the tag (currently disabled insertion due to lack of testing storage)
+	 * Connection c - Connection to the database
 	 */
 	public void insertTag(String d, String TLD, String path, String protocol, String tag, String innerData,
 			Connection c) throws SQLException {
@@ -122,6 +124,12 @@ public class DBO {
 
 	}
 
+	/**
+	 * getTlds
+	 * Finds and displays all unique top level domains in the Database
+	 * Connection c - connection to database
+	 * @return List of top level domains as strings
+	 */
 	public ArrayList<String> getTlds(Connection c) {
 	    ArrayList<String> list = new ArrayList<>();
 	    ResultSet rs;
@@ -137,7 +145,13 @@ public class DBO {
         }
         return list;
     }
-
+	
+	/**
+	 * getTlds
+	 * Finds and displays all unique domains in the Database
+	 * Connection c - connection to database
+	 * @return List of domains as strings
+	 */
     public ArrayList<String> getDomains(Connection c) {
         ArrayList<String> list = new ArrayList<>();
         ResultSet rs;
@@ -153,43 +167,13 @@ public class DBO {
         }
         return list;
     }
-
-public static void makeTables(Connection c) throws FileNotFoundException {
-		
-		
-		/*
-		String basePath = new File("").getAbsolutePath();
-		System.out.println(basePath);
-
-		String path = new File("setupTables.sql").getAbsolutePath();
-
-		File script = new File(path);
-
-		// Path path = Paths.get("../../../setupTables.sql");
-		// try {
-		Scanner scanner = new Scanner(script);
-		// } catch (FileNotFoundException ex) {
-
-		// }
-
-		ArrayList<String> lines = new ArrayList();
-		String l = "";
-		while (scanner.hasNextLine()) {
-			lines.add(scanner.nextLine());
-			System.out.println("Adding " + l + " to arraylist");
-		}
-
-		// String sql = "DROP TABLE Tags;";
-
-		// try {
-		// PreparedStatement p = c.prepareStatement(sql);
-		// p.executeUpdate();
-		// System.out.println("Tables dropped successfully");
-		// } catch (SQLException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		 */
+    
+    /**
+     * makeTables
+     * Makes the appropriate table for the SQLite database
+     * Connection c - Connection to the database
+     */
+    public static void makeTables(Connection c) throws FileNotFoundException {
 		String sql = "CREATE TABLE Tags(name text, TLD text, path text, protocol text, tag text, innerData text)";
 		
 		try {
@@ -197,27 +181,16 @@ public static void makeTables(Connection c) throws FileNotFoundException {
 			p.executeUpdate();
 			System.out.println("Table created successfully");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		/*
-		for (int x = 0; x < lines.size(); x++) {
-			sql = lines.get(x);
-			System.out.println(sql);
-			try {
-				PreparedStatement p = c.prepareStatement(sql);
-				p.executeUpdate();
-				System.out.println("Table created successfully");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		*/
-
 	}
-
+    
+    /**
+     * protocolCount
+     * String protocol - Protocol to search for
+     * Connection c - Connection to database
+     * @return number of occurances of the protocol in the table
+     */
 	public int protocolCount(String protocol, Connection c) {
 		String sql = "SELECT COUNT(*) AS count FROM Tags WHERE Protocol = ? ";
 		int count = -1;
@@ -236,7 +209,13 @@ public static void makeTables(Connection c) throws FileNotFoundException {
 		return count;
 
 	}
-
+	
+	/**
+	 * uniqueDomainCount
+	 * Finds and counts unique domains in the database
+	 * Connection c - Connection to the database
+	 * @return number of qunique domains in the table
+	 */
 	public static int uniqueDomainCount(Connection c) {
 		String sql = "SELECT COUNT(DISTINCT name) AS count FROM Tags";
 		int count = -1;
@@ -254,6 +233,14 @@ public static void makeTables(Connection c) throws FileNotFoundException {
 		return count;
 	}
 
+	/**
+	 * domainTagCount
+	 * Finds the number of tags matching String tag in domains matching String domain
+	 * String domain - Domain to search in relation to
+	 * String tag - Tag to search in relation to
+	 * Connection c - connection to Database
+	 * @return number of tags resembling String tag in domains resembling String domain
+	 */
 	public static int domainTagCount(String domain, String tag, Connection c) {
 		String sql = "SELECT COUNT(*) AS count FROM Tags WHERE tag = ? and name = ?";
 		int count = -1;
