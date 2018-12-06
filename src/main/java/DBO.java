@@ -79,6 +79,46 @@ public class DBO {
 		
 		
 	}
+	public ArrayList<Integer> queryByTld(ArrayList<String> s, Connection c) {
+		ArrayList<Integer> results = new ArrayList<Integer>();
+		for (String str : s){
+			ResultSet rs;
+			String sql = "SELECT COUNT(*) AS count FROM Tags WHERE tld = ?";
+			try {
+				PreparedStatement p = c.prepareStatement(sql);
+				p.setString(1, str);
+				rs = p.executeQuery();
+				int count = rs.getInt("count");
+				results.add(count);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return results;
+
+
+	}
+	public ArrayList<Integer> queryByDomain(ArrayList<String> s, Connection c) {
+		ArrayList<Integer> results = new ArrayList<Integer>();
+		for (String str : s){
+			ResultSet rs;
+			String sql = "SELECT COUNT(*) AS count FROM Tags WHERE name = ?";
+			try {
+				PreparedStatement p = c.prepareStatement(sql);
+				p.setString(1, str);
+				rs = p.executeQuery();
+				int count = rs.getInt("count");
+				results.add(count);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return results;
+
+
+	}
 
 	public void insertTag(String d, String TLD, String path, String protocol, String tag, String innerData,
 			Connection c) throws SQLException {
