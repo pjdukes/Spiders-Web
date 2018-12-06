@@ -90,13 +90,7 @@ public class Index {
 		if (operate == false) {
 			return true;
 		}
-		
-//		System.out.println("TESTING SCANNER, PLEASE INPUT SOMETHING");
-//		String b = scan.next();
-//		System.out.println("b = " + b);
-		
-		
-		
+
 		while (loop) {
 			System.out.println("What would you like to do now?");
 			System.out.println("[1]: Get the data on all TLDs");
@@ -116,28 +110,28 @@ public class Index {
 					case "1":
 					    ArrayList<String> al1 = new ArrayList<>();
 					    ArrayList<Integer> al2 = new ArrayList<>();
-						int flag = 0;
+						int flag1 = 0;
 						System.out.println("Would you like to save the chart? Y/N");
 						if (scan.next().substring(0, 1).toLowerCase().equals("y")) {
-							flag = 1;
+							flag1 = 1;
                             System.out.println("File will be saved");
 						}
                         al1 = db.getTlds(c);
 						al2 = db.queryByTag(al1, c);
-						v.makePieChart(al1, al2, flag, "testChart");
+						v.makePieChart(al1, al2, flag1, "testChart");
 						break;
 					case "2":
-                        ArrayList<String> al1 = new ArrayList<>();
-                        ArrayList<Integer> al2 = new ArrayList<>();
-                        int flag = 0;
+                        ArrayList<String> al3 = new ArrayList<>();
+                        ArrayList<Integer> al4 = new ArrayList<>();
+                        int flag2 = 0;
                         System.out.println("Would you like to save the chart? Y/N");
                         if (scan.next().substring(0, 1).toLowerCase().equals("y")) {
-                            flag = 1;
+                            flag2 = 1;
                             System.out.println("File will be saved");
                         }
-                        al1 = db.getTlds(c);
-                        al2 = db.queryByTag(al1, c);
-                        v.makeBarChart(al1, al2, flag, "testChart");
+                        al3 = db.getTlds(c);
+                        al4 = db.queryByTag(al3, c);
+                        v.makeBarChart(al3, al4, flag2, "testChart");
 						break;
 					case "3":
 						loop = false;
@@ -160,28 +154,28 @@ public class Index {
 					case "1":
                         ArrayList<String> al1 = new ArrayList<>();
                         ArrayList<Integer> al2 = new ArrayList<>();
-                        int flag = 0;
+                        int flag1 = 0;
                         System.out.println("Would you like to save the chart? Y/N");
                         if (scan.next().substring(0, 1).toLowerCase().equals("y")) {
-                            flag = 1;
+                            flag1 = 1;
                             System.out.println("File will be saved");
                         }
                         al1 = db.getDomains(c);
                         al2 = db.queryByTag(al1, c);
-                        v.makePieChart(al1, al2, flag, "testChart");
+                        v.makePieChart(al1, al2, flag1, "testChart");
 						break;
 					case "2":
-                        ArrayList<String> al1 = new ArrayList<>();
-                        ArrayList<Integer> al2 = new ArrayList<>();
-                        int flag = 0;
+                        ArrayList<String> al3 = new ArrayList<>();
+                        ArrayList<Integer> al4 = new ArrayList<>();
+                        int flag2 = 0;
                         System.out.println("Would you like to save the chart? Y/N");
                         if (scan.next().substring(0, 1).toLowerCase().equals("y")) {
-                            flag = 1;
+                            flag2 = 1;
                             System.out.println("File will be saved");
                         }
-                        al1 = db.getDomains(c);
-                        al2 = db.queryByTag(al1, c);
-                        v.makeBarChart(al1, al2, flag, "testChart");
+                        al3 = db.getDomains(c);
+                        al4 = db.queryByTag(al3, c);
+                        v.makeBarChart(al3, al4, flag2, "testChart");
 						break;
 					case "3":
 						loop = false;

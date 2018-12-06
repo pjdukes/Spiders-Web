@@ -59,6 +59,7 @@
             <zipfileset excludes="META-INF/*.SF" src="lib\jsoup-1.11.3.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="lib\junit-4.12.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="lib\sqlite-jdbc-3.23.1.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="lib\xchart-3.5.2.jar"/>
         </jar>
     </target>
 

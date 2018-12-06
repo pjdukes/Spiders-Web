@@ -90,7 +90,7 @@ public class DBO {
 		p.setString(3, path);
 		p.setString(4, protocol);
 		p.setString(5, tag);
-		p.setString(6, innerData);
+		p.setString(6, "");
 		p.executeUpdate();
 
 	}

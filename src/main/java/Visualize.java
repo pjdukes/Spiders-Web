@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Visualize {
-    public void makePieChart(List<String> al1, List<Integer> al2, int flag, String name) {
+    public void makePieChart(ArrayList<String> al1, ArrayList<Integer> al2, int flag, String name) {
         PieChart chart = new PieChartBuilder().width(800).height(800).build();
 
         for (int i = 0; i < al1.size(); i++) {
@@ -24,7 +24,7 @@ public class Visualize {
         new SwingWrapper(chart).displayChart();
     }
 
-    public void makeBarChart(List<String> al1, List<Integer> al2, int flag, String name) {
+    public void makeBarChart(ArrayList<String> al1, ArrayList<Integer> al2, int flag, String name) {
         CategoryChart chart = new CategoryChartBuilder().width(800).height(800).build();
 
         chart.addSeries("Bar Chart", al1, al2);
