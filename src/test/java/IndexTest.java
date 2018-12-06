@@ -10,7 +10,7 @@ public class IndexTest {
 
 	@Test
 	public void testIndexClosure() {
-        System.setIn(new ByteArrayInputStream("3 excel.csv 4".getBytes())); //DON'T TOUCH THIS
+        System.setIn(new ByteArrayInputStream("4".getBytes())); //DON'T TOUCH THIS
 	    assertTrue(Index.indexMain("https://www.google.com/",1,1,false));
 	}
 

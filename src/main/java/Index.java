@@ -84,6 +84,7 @@ public class Index {
 	}
 	
 	public static boolean indexRecord(boolean operate, DBO db, Connection c) {
+	    Visualize v = new Visualize();
 		boolean loop = true;
 		
 		if (operate == false) {
@@ -113,20 +114,30 @@ public class Index {
 					System.out.println("[3] Go Back");
 					switch (scan.next()) {
 					case "1":
-						// Make chart
-						System.out.println("Would you like to save the chart? Y/n");
+					    ArrayList<String> al1 = new ArrayList<>();
+					    ArrayList<Integer> al2 = new ArrayList<>();
+						int flag = 0;
+						System.out.println("Would you like to save the chart? Y/N");
 						if (scan.next().substring(0, 1).toLowerCase().equals("y")) {
-							// Save file
-							System.out.println("File saved");
+							flag = 1;
+                            System.out.println("File will be saved");
 						}
+                        al1 = db.getTlds(c);
+						al2 = db.queryByTag(al1, c);
+						v.makePieChart(al1, al2, flag, "testChart");
 						break;
 					case "2":
-						// Make chart
-						System.out.println("Would you like to save the chart? Y/n");
-						if (scan.next().substring(0, 1).toLowerCase().equals("y")) {
-							// Save file
-							System.out.println("File saved");
-						}
+                        ArrayList<String> al1 = new ArrayList<>();
+                        ArrayList<Integer> al2 = new ArrayList<>();
+                        int flag = 0;
+                        System.out.println("Would you like to save the chart? Y/N");
+                        if (scan.next().substring(0, 1).toLowerCase().equals("y")) {
+                            flag = 1;
+                            System.out.println("File will be saved");
+                        }
+                        al1 = db.getTlds(c);
+                        al2 = db.queryByTag(al1, c);
+                        v.makeBarChart(al1, al2, flag, "testChart");
 						break;
 					case "3":
 						loop = false;
@@ -147,20 +158,30 @@ public class Index {
 					System.out.println("[3] Go Back");
 					switch (scan.next()) {
 					case "1":
-						// Make chart
-						System.out.println("Would you like to save the chart? Y/n");
-						if (scan.next().substring(0, 1).toLowerCase().equals("y")) {
-							// Save file
-							System.out.println("File saved");
-						}
+                        ArrayList<String> al1 = new ArrayList<>();
+                        ArrayList<Integer> al2 = new ArrayList<>();
+                        int flag = 0;
+                        System.out.println("Would you like to save the chart? Y/N");
+                        if (scan.next().substring(0, 1).toLowerCase().equals("y")) {
+                            flag = 1;
+                            System.out.println("File will be saved");
+                        }
+                        al1 = db.getDomains(c);
+                        al2 = db.queryByTag(al1, c);
+                        v.makePieChart(al1, al2, flag, "testChart");
 						break;
 					case "2":
-						// Make chart
-						System.out.println("Would you like to save the chart? Y/n");
-						if (scan.next().substring(0, 1).toLowerCase().equals("y")) {
-							// Save file
-							System.out.println("File saved");
-						}
+                        ArrayList<String> al1 = new ArrayList<>();
+                        ArrayList<Integer> al2 = new ArrayList<>();
+                        int flag = 0;
+                        System.out.println("Would you like to save the chart? Y/N");
+                        if (scan.next().substring(0, 1).toLowerCase().equals("y")) {
+                            flag = 1;
+                            System.out.println("File will be saved");
+                        }
+                        al1 = db.getDomains(c);
+                        al2 = db.queryByTag(al1, c);
+                        v.makeBarChart(al1, al2, flag, "testChart");
 						break;
 					case "3":
 						loop = false;
