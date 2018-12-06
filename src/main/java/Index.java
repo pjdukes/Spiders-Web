@@ -63,6 +63,9 @@ public class Index {
 
 		try {
 			db.insertTag("", "", "", "", "", "", c);
+			String sql = "DELETE FROM Tags WHERE name = \"\"";
+			PreparedStatement p = c.prepareStatement(sql);
+			p.executeUpdate();
 			System.out.println("The database is correctly configured");
 		} catch (SQLException e) {
 			System.out.println("web.db cannot be found or is corrupted");
@@ -85,6 +88,7 @@ public class Index {
 	
 	/**
 	 * indexRecord
+	 * Queries user for data usage in the form of visual charts and .csv outputs
 	 * boolean operate
 	 * DBO db - A database object which allows parsing of data 
 	 * 		from a database connection to query and retrive data

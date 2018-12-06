@@ -5,7 +5,13 @@ import java.io.*;
 
 public class DBO {
 
-
+	/**
+	 * connectDB
+	 * Connects to a database, returning it for reference
+	 * boolean flag - Whether or not connection should be made to
+	 * 			a test database, or a real one (used for testing)
+	 * @return Connection object which connects to the chosen database
+	 */
 	public Connection connectDB(boolean flag) {
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -27,6 +33,12 @@ public class DBO {
 		return connection;
 	}
 
+	/**
+	 * exportAsCSV
+	 * String filename - Name of file to be made
+	 * Connection c - Connection to database
+	 * @return 1 if the CSV is created (empty or not), 0 if it fails
+	 */
 	public int exportAsCSV(String filename, Connection c) throws IOException {
 
 		FileWriter f = new FileWriter(filename);
@@ -59,6 +71,12 @@ public class DBO {
 
 	}
 
+	/**
+	 * queryByTag
+	 * ArrayList<String> s - List of tags to query
+	 * Connection c - Connection to the database to query
+	 * @return Count of respective tags in the database
+	 */
 	public ArrayList<Integer> queryByTag(ArrayList<String> s, Connection c) {
 		ArrayList<Integer> results = new ArrayList<Integer>();
 		for (String str : s){
@@ -120,6 +138,15 @@ public class DBO {
 
 	}
 
+	/**
+	 * insertTag
+	 * String d
+	 * String TLD
+	 * String path
+	 * String protocol
+	 * String tag
+	 * String innerData
+	 */
 	public void insertTag(String d, String TLD, String path, String protocol, String tag, String innerData,
 			Connection c) throws SQLException {
 		String sql = "INSERT INTO Tags VALUES(?, ?, ?, ?, ?, ?)";

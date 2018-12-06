@@ -10,6 +10,7 @@ public class Parser {
 
 	/**
 	 * getAndStoreTags
+	 * Gets HTML tags from websites along with domain, top level domain, and protocol
 	 * Connection c - A connection to a SQLite Database
 	 * String start - The address to reconnect to and gain information from
 	 */
@@ -40,7 +41,7 @@ public class Parser {
         try {
             doc = Jsoup.connect(start).get();
             for(Element e : doc.getAllElements()){// all elements in html
-                db.insertTag(domain, ".".concat(TLD[TLD.length - 1]), path, protocol, e.tagName(), e.html(), c);
+                db.insertTag(domain, ".".concat(TLD[TLD.length - 1]), path, protocol, e.tagName(), "", c);
             }
         } catch (Exception e) {
             e.printStackTrace();
