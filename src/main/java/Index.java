@@ -80,10 +80,10 @@ public class Index {
 		}
 		System.out.println("\nData has been stored in the database!\n");
 
-		return indexRecord(operateRecord);
+		return indexRecord(operateRecord, db, c);
 	}
 	
-	public static boolean indexRecord(boolean operate) {
+	public static boolean indexRecord(boolean operate, DBO db, Connection c) {
 		boolean loop = true;
 		
 		if (operate == false) {
@@ -175,6 +175,18 @@ public class Index {
 			case "3":
 				System.out.println("What would you like to name the file?");
 				String filename = scan.next();
+				if (!filename.contains(".csv"))
+				{
+					///System.out.println("looks like you forgot the .csv");
+					filename = filename + ".csv";
+					//System.out.println(filename);
+				}
+				try {
+					db.exportAsCSV(filename, c);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
 				// Export data method
 				break;
 			case "4":

@@ -11,7 +11,7 @@ public class IndexTest {
 	public void testIndexClosure() {
 		assertTrue(Index.indexMain("https://www.google.com/",1,1,false));
 	}
-	
+
 	@Test
 	public void testIndexCharting() {
 		assertTrue(Index.indexRecord(true));
