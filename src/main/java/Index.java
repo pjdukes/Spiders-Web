@@ -63,6 +63,9 @@ public class Index {
 
 		try {
 			db.insertTag("", "", "", "", "", "", c);
+			String sql = "DELETE FROM Tags WHERE name = \"\"";
+			PreparedStatement p = c.prepareStatement(sql);
+			p.executeUpdate();
 			System.out.println("The database is correctly configured");
 		} catch (SQLException e) {
 			System.out.println("web.db cannot be found or is corrupted");
@@ -125,7 +128,7 @@ public class Index {
                             System.out.println("File will be saved");
 						}
                         al1 = db.getTlds(c);
-						al2 = db.queryByTag(al1, c);
+						al2 = db.queryByTld(al1, c);
 						v.makePieChart(al1, al2, flag1, "testChart");
 						break;
 					case "2":
@@ -138,7 +141,7 @@ public class Index {
                             System.out.println("File will be saved");
                         }
                         al3 = db.getTlds(c);
-                        al4 = db.queryByTag(al3, c);
+                        al4 = db.queryByTld(al3, c);
                         v.makeBarChart(al3, al4, flag2, "testChart");
 						break;
 					case "3":
@@ -169,7 +172,7 @@ public class Index {
                             System.out.println("File will be saved");
                         }
                         al1 = db.getDomains(c);
-                        al2 = db.queryByTag(al1, c);
+                        al2 = db.queryByDomain(al1, c);
                         v.makePieChart(al1, al2, flag1, "testChart");
 						break;
 					case "2":
@@ -182,7 +185,7 @@ public class Index {
                             System.out.println("File will be saved");
                         }
                         al3 = db.getDomains(c);
-                        al4 = db.queryByTag(al3, c);
+                        al4 = db.queryByDomain(al3, c);
                         v.makeBarChart(al3, al4, flag2, "testChart");
 						break;
 					case "3":
