@@ -10,6 +10,7 @@ public class Parser {
 
 	/**
 	 * getAndStoreTags
+	 * Gets HTML tags from websites along with domain, top level domain, and protocol
 	 * Connection c - A connection to a SQLite Database
 	 * String start - The address to reconnect to and gain information from
 	 */
