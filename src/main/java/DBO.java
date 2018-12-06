@@ -97,42 +97,42 @@ public class DBO {
 		
 		
 	}
-	public ArrayList<Integer> queryByTld(ArrayList<String> s, Connection c) {
+	public ArrayList<Integer> queryByTld(Connection c) {
 		ArrayList<Integer> results = new ArrayList<Integer>();
-		for (String str : s){
-			ResultSet rs;
-			String sql = "SELECT COUNT(*) AS count FROM Tags WHERE tld = ?";
-			try {
-				PreparedStatement p = c.prepareStatement(sql);
-				p.setString(1, str);
-				rs = p.executeQuery();
-				int count = rs.getInt("count");
-				results.add(count);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+
+		ResultSet rs;
+		String sql = "select tld, count(tld) as count from (select distinct tld, path from tags) group by tld";
+		try {
+			PreparedStatement p = c.prepareStatement(sql);
+			rs = p.executeQuery();
+			while (rs.next()) {
+				results.add(rs.getInt("count"));
 			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
 		return results;
 
 
 	}
-	public ArrayList<Integer> queryByDomain(ArrayList<String> s, Connection c) {
+	public ArrayList<Integer> queryByDomain(Connection c) {
 		ArrayList<Integer> results = new ArrayList<Integer>();
-		for (String str : s){
-			ResultSet rs;
-			String sql = "SELECT COUNT(*) AS count FROM Tags WHERE name = ?";
-			try {
-				PreparedStatement p = c.prepareStatement(sql);
-				p.setString(1, str);
-				rs = p.executeQuery();
-				int count = rs.getInt("count");
-				results.add(count);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+
+		ResultSet rs;
+		String sql = "select name, count(name) as count from (select distinct name, path from tags) group by name";
+		try {
+			PreparedStatement p = c.prepareStatement(sql);
+			rs = p.executeQuery();
+			while (rs.next()) {
+				results.add(rs.getInt("count"));
 			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
 		return results;
 
 

@@ -128,7 +128,7 @@ public class Index {
                             System.out.println("File will be saved");
 						}
                         al1 = db.getTlds(c);
-						al2 = db.queryByTld(al1, c);
+						al2 = db.queryByTld(c);
 						v.makePieChart(al1, al2, flag1, "testChart");
 						break;
 					case "2":
@@ -141,7 +141,7 @@ public class Index {
                             System.out.println("File will be saved");
                         }
                         al3 = db.getTlds(c);
-                        al4 = db.queryByTld(al3, c);
+                        al4 = db.queryByTld(c);
                         v.makeBarChart(al3, al4, flag2, "testChart");
 						break;
 					case "3":
@@ -172,7 +172,7 @@ public class Index {
                             System.out.println("File will be saved");
                         }
                         al1 = db.getDomains(c);
-                        al2 = db.queryByDomain(al1, c);
+                        al2 = db.queryByDomain(c);
                         v.makePieChart(al1, al2, flag1, "testChart");
 						break;
 					case "2":
@@ -185,7 +185,7 @@ public class Index {
                             System.out.println("File will be saved");
                         }
                         al3 = db.getDomains(c);
-                        al4 = db.queryByDomain(al3, c);
+                        al4 = db.queryByDomain(c);
                         v.makeBarChart(al3, al4, flag2, "testChart");
 						break;
 					case "3":
