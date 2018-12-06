@@ -63,6 +63,9 @@ public class Index {
 
 		try {
 			db.insertTag("", "", "", "", "", "", c);
+			String sql = "DELETE FROM Tags WHERE name = \"\"";
+			PreparedStatement p = c.prepareStatement(sql);
+			p.executeUpdate();
 			System.out.println("The database is correctly configured");
 		} catch (SQLException e) {
 			System.out.println("web.db cannot be found or is corrupted");
