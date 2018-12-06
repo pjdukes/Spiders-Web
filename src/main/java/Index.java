@@ -83,6 +83,13 @@ public class Index {
 		return indexRecord(operateRecord, db, c);
 	}
 	
+	/**
+	 * indexRecord
+	 * boolean operate
+	 * DBO db - A database object which allows parsing of data 
+	 * 		from a database connection to query and retrive data
+	 * Connection c - Connection to a SQLite database
+	 */
 	public static boolean indexRecord(boolean operate, DBO db, Connection c) {
 	    Visualize v = new Visualize();
 		boolean loop = true;

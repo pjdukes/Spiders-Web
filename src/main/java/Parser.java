@@ -8,6 +8,11 @@ import java.sql.Connection;
 
 public class Parser {
 
+	/**
+	 * getAndStoreTags
+	 * Connection c - A connection to a SQLite Database
+	 * String start - The address to reconnect to and gain information from
+	 */
     public void getAndStoreTags(Connection c, String start) {
         // domain, tld, path, protocol, tag, innerdata, c
         DBO db = new DBO();
