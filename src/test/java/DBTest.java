@@ -65,6 +65,16 @@ public class DBTest {
 		c.close();
 	}
 
+	@Test
+	public void testQueryByTld() throws SQLException {
+		DBO test = new DBO();
+		Connection c = test.connectDB(true);
+		ArrayList<Integer> list = new ArrayList<>();
+		list = test.queryByTld(c);
+		assertNotNull(list);
+		c.close();
+	}
+
     @Test
     public void testGetDomains() throws SQLException {
         DBO test = new DBO();
