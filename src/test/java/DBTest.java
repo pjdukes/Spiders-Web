@@ -24,25 +24,37 @@ public class DBTest {
 		else 
 		{
 			System.out.println("Failed to create mock.db");			
-		}
-		
+		}		
 	}
 	
-//	@AfterClass
-//	public static void deleteDatabase()
-//	{
-//		File f = new File("mock.db");
-//		System.out.println("f = " + f.getAbsoluteFile());
-//		
-//		if(f.delete()) 
-//        { 
-//            System.out.println("File deleted successfully"); 
-//        } 
-//        else
-//        { 
-//            System.out.println("Failed to delete the file"); 
-//        } 
-//	}
+	@Test
+	public void testDatabaseConnection() throws SQLException {
+		DBO test = new DBO();
+		Connection c = test.connectDB(true);
+		test.insertTag("Google", ".com", "/path", "https", "<tag>", "innerData", c);
+		assertNotNull(test);
+		c.close();
+	}
+	
+	@Test
+	public void testGetTlds() throws SQLException {
+		DBO test = new DBO();
+		Connection c = test.connectDB(true);
+		ArrayList<String> list;
+		list = test.getTlds(c);
+		assertNotNull(list);
+		c.close();
+	}
+	
+    @Test
+    public void testGetDomains() throws SQLException {
+        DBO test = new DBO();
+        Connection c = test.connectDB(true);
+        ArrayList<String> list;
+        list = test.getDomains(c);
+        assertNotNull(list);
+        c.close();
+    }
 	
 	@Test 
 	public void testQueryByTag() throws SQLException {
@@ -56,16 +68,6 @@ public class DBTest {
 	}
 
 	@Test
-	public void testGetTlds() throws SQLException {
-		DBO test = new DBO();
-		Connection c = test.connectDB(true);
-		ArrayList<String> list;
-		list = test.getTlds(c);
-		assertNotNull(list);
-		c.close();
-	}
-
-	@Test
 	public void testQueryByTld() throws SQLException {
 		DBO test = new DBO();
 		Connection c = test.connectDB(true);
@@ -74,25 +76,14 @@ public class DBTest {
 		assertNotNull(list);
 		c.close();
 	}
-
-    @Test
-    public void testGetDomains() throws SQLException {
-        DBO test = new DBO();
-        Connection c = test.connectDB(true);
-        ArrayList<String> list;
-        list = test.getDomains(c);
-        assertNotNull(list);
-        c.close();
-    }
 	
-	@Test
-	public void testDatabaseConnection() throws SQLException {
+	@Test 
+	public void testQueryByDomain() throws SQLException {
 		DBO test = new DBO();
 		Connection c = test.connectDB(true);
-		test.insertTag("Google", ".com", "/path", "https", "<tag>", "innerData", c);
-		assertNotNull(test);
+		ArrayList<Integer> testArray = test.queryByDomain(c);
+		assertNotEquals((int)testArray.get(0), -1);
 		c.close();
-
 	}
 	
 	@Test
@@ -104,20 +95,6 @@ public class DBTest {
 		c.close();
 	}
 
-	//@Ignore("We don't want to clear the database every time we test")
-//	@Test
-//	public void testClearDatabase() {
-//		DBO test = new DBO();
-//		Connection c = test.connectDB(true);
-//		try {
-//			test.clearDB(c);
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//
-//		assertNotNull(test);
-//	}
-
 	@Test
 	public void testProtocolQuery() throws SQLException {
 		DBO test = new DBO();
@@ -126,20 +103,7 @@ public class DBTest {
 		assertNotEquals(-1, t);
 		c.close();
 	}
-	
-	//@Ignore("Depreciated")
-//	@Test
-//	public void testMakeTables() {
-//		DBO test = new DBO();
-//		Connection c = test.connectDB(true);
-//
-//		try {
-//			test.makeTables(c);
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//	}
-	
+		
 	@Test
 	public void testUniqueDomain() throws SQLException{
 		DBO test = new DBO();
@@ -151,15 +115,6 @@ public class DBTest {
 		assertNotEquals(count, -1);
 		c.close();
 	}
-	/*
-	@Test
-	public void testExportCSV() {
-		DBO test = new DBO();
-		Connection c = test.connectDB();
-		
-		test.exportDataCSV(c, "Select * from Tags", "testExportCSV");
-	}
-	*/
 	
 	@Test
 	public void domainTagCountTest() throws SQLException {
@@ -173,9 +128,4 @@ public class DBTest {
 		assertNotEquals(count, -1);
 		c.close();
 	}
-
-
-
-
-
 }
