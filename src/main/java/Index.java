@@ -1,6 +1,8 @@
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 import java.sql.*;
 import java.io.*;
 
@@ -41,6 +43,31 @@ public class Index {
 		indexMain(firstLink, dataLimit, crawlLimit, true);
 	}
 	
+	private static void printProgress(long startTime, long total, long current) {
+	    long eta = current == 0 ? 0 : 
+	        (total - current) * (System.currentTimeMillis() - startTime) / current;
+
+	    String etaHms = current == 0 ? "N/A" : 
+	            String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(eta),
+	                    TimeUnit.MILLISECONDS.toMinutes(eta) % TimeUnit.HOURS.toMinutes(1),
+	                    TimeUnit.MILLISECONDS.toSeconds(eta) % TimeUnit.MINUTES.toSeconds(1));
+
+	    StringBuilder string = new StringBuilder(140);   
+	    int percent = (int) (current * 100 / total);
+	    string
+	        .append('\r')
+	        .append(String.join("", Collections.nCopies(percent == 0 ? 2 : 2 - (int) (Math.log10(percent)), " ")))
+	        .append(String.format(" %d%% [", percent))
+	        .append(String.join("", Collections.nCopies(percent, "=")))
+	        .append('>')
+	        .append(String.join("", Collections.nCopies(100 - percent, " ")))
+	        .append(']')
+	        .append(String.join("", Collections.nCopies(current == 0 ? (int) (Math.log10(total)) : (int) (Math.log10(total)) - (int) (Math.log10(current)), " ")))
+	        .append(String.format(" %d/%d, ETA: %s", current, total, etaHms));
+
+	    System.out.print(string);
+	}
+	
 	/**
 	 * indexMain
 	 * firstLink - First link to crawl
@@ -78,8 +105,11 @@ public class Index {
 
 		linkList = crawler.crawl(firstLink, linkList, crawlLimit);
 		System.out.println("Crawling finished... data is being stored to the database, this may take some time");
-		for (int i = 0; i < linkList.size() && i < dataLimit; i++) {
+		long startTime = System.currentTimeMillis();
+		int largest = (linkList.size() > dataLimit) ? linkList.size() : dataLimit;
+		for (int i = 0; i <= linkList.size() && i <= dataLimit; i++) {
 			ps.getAndStoreTags(c, linkList.get(i));
+			printProgress(startTime, largest, i);
 		}
 		System.out.println("\nData has been stored in the database!\n");
 
