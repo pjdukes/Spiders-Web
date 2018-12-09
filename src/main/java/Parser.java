@@ -22,9 +22,7 @@ public class Parser {
         String[] TLD = null;
         String path = "";
         String protocol = "";
-        String tag = "";
-        String innerData = "";
-
+        
         try {
             URL aURL = new URL(start);
             domain = aURL.getHost();

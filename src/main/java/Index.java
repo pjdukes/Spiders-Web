@@ -39,7 +39,6 @@ public class Index {
 		int dataLimit = scan.nextInt();
 		scan.nextLine();
 		System.out.println("");
-		//scan.close();
 		indexMain(firstLink, dataLimit, crawlLimit, true);
 	}
 	
@@ -77,8 +76,6 @@ public class Index {
 	 * @return True if closes successfully
 	 */
 	public static boolean indexMain(String firstLink, int dataLimit, int crawlLimit, boolean operateRecord) throws IndexOutOfBoundsException {
-		//if (firstLink != null)
-			//throw new IndexOutOfBoundsException("Worked");
 		Crawler crawler = new Crawler();
 		Parser ps = new Parser();
 		DBO db = new DBO();
@@ -106,10 +103,10 @@ public class Index {
 		linkList = crawler.crawl(firstLink, linkList, crawlLimit);
 		System.out.println("Crawling finished... data is being stored to the database, this may take some time");
 		long startTime = System.currentTimeMillis();
-		int largest = (linkList.size() > dataLimit) ? linkList.size() : dataLimit;
+		int smallest = (linkList.size() < dataLimit) ? linkList.size() : dataLimit;
 		for (int i = 0; i <= linkList.size() && i <= dataLimit; i++) {
 			ps.getAndStoreTags(c, linkList.get(i));
-			printProgress(startTime, largest, i);
+			printProgress(startTime, smallest, i);
 		}
 		System.out.println("\nData has been stored in the database!\n");
 
@@ -241,21 +238,18 @@ public class Index {
 				loop = true;
 				break;
 			case "3":
+			    // Export data method
 				System.out.println("What would you like to name the file?");
 				String filename = scan.next();
 				if (!filename.contains(".csv"))
 				{
-					///System.out.println("looks like you forgot the .csv");
 					filename = filename + ".csv";
-					//System.out.println(filename);
 				}
 				try {
 					db.exportAsCSV(filename, c);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				
-				// Export data method
 				break;
 			case "4":
 				loop = false;
@@ -264,8 +258,7 @@ public class Index {
 				System.out.println("Please enter a valid option\n");
 				break;
 			}
-		}
-		
+		}	
 		System.out.println("Program Exiting");
 		scan.close();
 		return true;

@@ -1,6 +1,5 @@
 import java.sql.*;
 import java.util.*;
-import java.nio.file.*;
 import java.io.*;
 
 public class DBO {
@@ -27,7 +26,6 @@ public class DBO {
 			}
 			System.out.println("Connection to the database has been established");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return connection;
@@ -89,7 +87,6 @@ public class DBO {
 				int count = rs.getInt("count");
 				results.add(count);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -109,7 +106,6 @@ public class DBO {
 				results.add(rs.getInt("count"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -129,7 +125,6 @@ public class DBO {
 				results.add(rs.getInt("count"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -241,7 +236,6 @@ public class DBO {
 			rs = p.executeQuery();
 			count = rs.getInt("count");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -265,7 +259,6 @@ public class DBO {
 			rs = p.executeQuery();
 			count = rs.getInt("count");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -292,7 +285,6 @@ public class DBO {
 			rs = p.executeQuery();
 			count = rs.getInt("count");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
