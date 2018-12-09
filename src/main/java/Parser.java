@@ -42,7 +42,7 @@ public class Parser {
                 db.insertTag(domain, ".".concat(TLD[TLD.length - 1]), path, protocol, e.tagName(), "", c);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
     }
 }
