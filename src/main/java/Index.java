@@ -1,6 +1,8 @@
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 import java.sql.*;
 import java.io.*;
 
@@ -41,6 +43,31 @@ public class Index {
 		indexMain(firstLink, dataLimit, crawlLimit, true);
 	}
 	
+	private static void printProgress(long startTime, long total, long current) {
+	    long eta = current == 0 ? 0 : 
+	        (total - current) * (System.currentTimeMillis() - startTime) / current;
+
+	    String etaHms = current == 0 ? "N/A" : 
+	            String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(eta),
+	                    TimeUnit.MILLISECONDS.toMinutes(eta) % TimeUnit.HOURS.toMinutes(1),
+	                    TimeUnit.MILLISECONDS.toSeconds(eta) % TimeUnit.MINUTES.toSeconds(1));
+
+	    StringBuilder string = new StringBuilder(140);   
+	    int percent = (int) (current * 100 / total);
+	    string
+	        .append('\r')
+	        .append(String.join("", Collections.nCopies(percent == 0 ? 2 : 2 - (int) (Math.log10(percent)), " ")))
+	        .append(String.format(" %d%% [", percent))
+	        .append(String.join("", Collections.nCopies(percent, "=")))
+	        .append('>')
+	        .append(String.join("", Collections.nCopies(100 - percent, " ")))
+	        .append(']')
+	        .append(String.join("", Collections.nCopies(current == 0 ? (int) (Math.log10(total)) : (int) (Math.log10(total)) - (int) (Math.log10(current)), " ")))
+	        .append(String.format(" %d/%d, ETA: %s", current, total, etaHms));
+
+	    System.out.print(string);
+	}
+	
 	/**
 	 * indexMain
 	 * firstLink - First link to crawl
@@ -78,8 +105,11 @@ public class Index {
 
 		linkList = crawler.crawl(firstLink, linkList, crawlLimit);
 		System.out.println("Crawling finished... data is being stored to the database, this may take some time");
-		for (int i = 0; i < linkList.size() && i < dataLimit; i++) {
+		long startTime = System.currentTimeMillis();
+		int largest = (linkList.size() > dataLimit) ? linkList.size() : dataLimit;
+		for (int i = 0; i <= linkList.size() && i <= dataLimit; i++) {
 			ps.getAndStoreTags(c, linkList.get(i));
+			printProgress(startTime, largest, i);
 		}
 		System.out.println("\nData has been stored in the database!\n");
 
@@ -121,28 +151,34 @@ public class Index {
 					case "1":
 					    ArrayList<String> al1 = new ArrayList<>();
 					    ArrayList<Integer> al2 = new ArrayList<>();
+					    String filename1 = null;
 						int flag1 = 0;
 						System.out.println("Would you like to save the chart? Y/N");
 						if (scan.next().substring(0, 1).toLowerCase().equals("y")) {
+						    System.out.println("What would you like to name the file?");
+                            filename1 = scan.next();
 							flag1 = 1;
                             System.out.println("File will be saved");
 						}
                         al1 = db.getTlds(c);
 						al2 = db.queryByTld(c);
-						v.makePieChart(al1, al2, flag1, "testChart");
+						v.makePieChart(al1, al2, flag1, filename1);
 						break;
 					case "2":
                         ArrayList<String> al3 = new ArrayList<>();
                         ArrayList<Integer> al4 = new ArrayList<>();
+                        String filename2 = null;
                         int flag2 = 0;
                         System.out.println("Would you like to save the chart? Y/N");
                         if (scan.next().substring(0, 1).toLowerCase().equals("y")) {
+                            System.out.println("What would you like to name the file?");
+                            filename2 = scan.next();
                             flag2 = 1;
                             System.out.println("File will be saved");
                         }
                         al3 = db.getTlds(c);
                         al4 = db.queryByTld(c);
-                        v.makeBarChart(al3, al4, flag2, "testChart");
+                        v.makeBarChart(al3, al4, flag2, filename2);
 						break;
 					case "3":
 						loop = false;
@@ -165,28 +201,34 @@ public class Index {
 					case "1":
                         ArrayList<String> al1 = new ArrayList<>();
                         ArrayList<Integer> al2 = new ArrayList<>();
+                        String filename1 = null;
                         int flag1 = 0;
                         System.out.println("Would you like to save the chart? Y/N");
                         if (scan.next().substring(0, 1).toLowerCase().equals("y")) {
+                            System.out.println("What would you like to name the file?");
+                            filename1 = scan.next();
                             flag1 = 1;
                             System.out.println("File will be saved");
                         }
                         al1 = db.getDomains(c);
                         al2 = db.queryByDomain(c);
-                        v.makePieChart(al1, al2, flag1, "testChart");
+                        v.makePieChart(al1, al2, flag1, filename1);
 						break;
 					case "2":
                         ArrayList<String> al3 = new ArrayList<>();
                         ArrayList<Integer> al4 = new ArrayList<>();
+                        String filename2 = null;
                         int flag2 = 0;
                         System.out.println("Would you like to save the chart? Y/N");
                         if (scan.next().substring(0, 1).toLowerCase().equals("y")) {
+                            System.out.println("What would you like to name the file?");
+                            filename2 = scan.next();
                             flag2 = 1;
                             System.out.println("File will be saved");
                         }
                         al3 = db.getDomains(c);
                         al4 = db.queryByDomain(c);
-                        v.makeBarChart(al3, al4, flag2, "testChart");
+                        v.makeBarChart(al3, al4, flag2, filename2);
 						break;
 					case "3":
 						loop = false;
